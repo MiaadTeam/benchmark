@@ -1,5 +1,5 @@
 import express from "express";
-import { initMongo } from "../database/mongo/pure";
+import { connectToMongoDB } from "../database/mongo/pure";
 // import countryRoutes from "./routes/country.routes";
 
 const ServerPort = 9900;
@@ -13,7 +13,7 @@ app.use(express.json());
 (async () => {
   process.argv.map(async (val, index, array) => {
     if (val.includes("--mongo")) {
-      await initMongo();
+      await connectToMongoDB();
     }
   })
 

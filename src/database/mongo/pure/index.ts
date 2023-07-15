@@ -1,20 +1,24 @@
-import { MongoClient } from "mongodb";
+import * as mongoDB from "mongodb";
+import { ConnectOptions } from "mongodb";
 
-// const uri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@localhost:27017/${process.env.DB_NAME}?maxPoolSize=2-&w=majority`;
-const uri = `mongodb://localhost:27017/benchmark?maxPoolSize=2-&w=majority`;
+export const collections: {
+	countries?: mongoDB.Collection
 
-const client = new MongoClient(uri);
+} = {}
 
-export const initMongo = async () => {
-  try {
-    await client.connect();
-    console.log("Mongodb connected ...");
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getClient = () => {
-  return client;
-};
-
+export async function connectToMongoDB () {
+ 
+	const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING as string,
+		{ useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions
+	);
+			
+	await client.connect();
+		 
+	const db: mongoDB.Db = client.db(process.env.DB_NAME);
+   
+	const countriesCollection: mongoDB.Collection = db.collection(process.env.COUNTRY_COLLECTION_NAME as string);
+ 
+    collections.countries = countriesCollection;
+	   
+	console.log(`Successfully connected to database: ${db.databaseName} and collection: ${countriesCollection.collectionName}`);
+ }
