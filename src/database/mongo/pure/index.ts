@@ -3,6 +3,8 @@ import { ConnectOptions } from "mongodb";
 
 export const collections: {
 	countries?: mongoDB.Collection
+	provinces?: mongoDB.Collection
+	cities?: mongoDB.Collection
 
 } = {}
 
@@ -15,10 +17,17 @@ export async function connectToMongoDB () {
 	await client.connect();
 		 
 	const db: mongoDB.Db = client.db(process.env.DB_NAME);
-   
+	console.log(`Successfully connected express server to mongoDB database: ${db.databaseName}`)
+
 	const countriesCollection: mongoDB.Collection = db.collection(process.env.COUNTRY_COLLECTION_NAME as string);
- 
     collections.countries = countriesCollection;
+	console.log(`Connected to collection: ${countriesCollection.collectionName}`);
 	   
-	console.log(`Successfully connected to database: ${db.databaseName} and collection: ${countriesCollection.collectionName}`);
- }
+	const provincesCollection: mongoDB.Collection = db.collection(process.env.PROVINCE_COLLECTION_NAME as string); collections.countries = countriesCollection;
+	collections.provinces = provincesCollection;
+	console.log(`Connected to collection: ${provincesCollection.collectionName}`);
+
+	const citiesCollection: mongoDB.Collection = db.collection(process.env.CITY_COLLECTION_NAME as string); collections.countries = countriesCollection;
+	collections.cities = citiesCollection
+	console.log(`Connected to collection: ${citiesCollection.collectionName}`);
+}
