@@ -1,17 +1,15 @@
 import * as mongoDB from "mongodb";
-import { ConnectOptions } from "mongodb";
 
 export const collections: {
 	countries?: mongoDB.Collection
 	provinces?: mongoDB.Collection
 	cities?: mongoDB.Collection
-
 } = {}
 
 export async function connectToMongoDB () {
  
 	const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING as string,
-		{ useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions
+		{ useNewUrlParser: true, useUnifiedTopology: true } as mongoDB.ConnectOptions
 	);
 			
 	await client.connect();
