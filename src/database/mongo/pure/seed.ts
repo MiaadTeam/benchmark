@@ -12,28 +12,22 @@ const seedMongoDB = async() => {
 	console.log("started to seed mongoDB ...");
 	
 	const dataset = await readDataSet()
-	const queries :any= []
 	
-	dataset.map(
-		async (seedCountry:SeedCountry )=> {
-			const country = await insertCountry(seedCountry)
-			queries.push(country)
-
-			seedCountry.states.map(async (state: SeedState) => {
-				const provinceQuery = await insertProvince(state)
-				queries.push(provinceQuery)
-				
-				state.cities.map(async (seedCity: SeedCity) => {
-					const cityQuery = await insertCity( seedCity)
-					queries.push(cityQuery)
+	const countryInserts = dataset.map(
+		async (seedCountry: SeedCountry) => {
+			const provinceInserts:any = seedCountry.states.map(async (state: SeedState) => {
+				const cityInserts = state.cities.map(async (seedCity: SeedCity) =>
+					insertCity(seedCity)
+				)
+				const cities = await Promise.all(cityInserts)
+				return insertProvince(state, cities as unknown as City[])
 				})
-			})
-		}
-	)
-	Promise.all(queries)
+				const provinces = await Promise.all(provinceInserts)
+				return await insertCountry(seedCountry, provinces as unknown as Province[])
+		})
+	Promise.all(countryInserts)
 
 	
-
 	console.log("seeded mongoDB");
 	
 }
@@ -52,22 +46,22 @@ function generateRandom(min = 0, max = 100) {
     return floor + min;
 }
 
-const insertCountry = async (seedCountry:SeedCountry) => {
+const insertCountry = async (seedCountry:SeedCountry, provinces: Province[]) => {
 	const country:Country = {
 		name: seedCountry.name,
 		abb: seedCountry.iso2,
 		population: generateRandom(100000, 99999999),
-		provinceIds:[]
+		provinceIds: provinces.map( province => province.id!)
 	}
 	return await createCountryService(country)
 }	
 
-const insertProvince = async (seedState:SeedState) => {
+const insertProvince = async (seedState:SeedState, cities:City[]) => {
 	const province:Province = {
 		name: seedState.name,
 		abb: seedState.name.slice(3),
 		population: generateRandom(10000, 9999999),
-		cityIds:[]
+		cityIds: cities.map(city => city.id!)
 	}
 	return await createProvinceService(province)
 }
