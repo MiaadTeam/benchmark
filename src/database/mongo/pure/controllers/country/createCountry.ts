@@ -10,8 +10,8 @@ const createCountry = async (req: Request, res: Response) => {
             ? res.status(201).send(`Successfully created a new country with id ${result.insertedId}`)
             : res.status(500).send("Failed to create a new country.");
 
-	}catch(error){
-		console.log( "failed to create country : "+ error.message )
+	}catch(error: any){
+		console.log( "failed to create country : "+ error )
 	}
 }
 

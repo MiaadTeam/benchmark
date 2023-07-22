@@ -15,8 +15,8 @@ const updateCountry = async (req: Request, res: Response) => {
             ? res.status(200).send(`Successfully updated Country with id ${id}`)
             : res.status(304).send(`Country with id: ${id} not updated`);
     } catch (error) {
-        console.error(error.message);
-        res.status(400).send(error.message);
+        console.error(error);
+        res.status(400).send(error);
     }
 }
 

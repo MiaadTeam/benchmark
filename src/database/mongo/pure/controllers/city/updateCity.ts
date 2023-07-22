@@ -15,8 +15,8 @@ const updateCity = async (req: Request, res: Response) => {
             ? res.status(200).send(`Successfully updated City with id ${id}`)
             : res.status(304).send(`City with id: ${id} not updated`);
     } catch (error) {
-        console.error(error.message);
-        res.status(400).send(error.message);
+        console.error(error);
+        res.status(400).send(error);
     }
 }
 

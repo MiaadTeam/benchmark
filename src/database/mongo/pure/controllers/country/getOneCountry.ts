@@ -4,7 +4,7 @@ import getOneCountryService from '../../services/country/getCountry.service'
 
 const getOneCountry = async (req: Request, res: Response) => {
 	try {
-		const _id = new ObjectId(req.body.id)
+		const _id = new ObjectId(req.params.id)
 		const country = await getOneCountryService(_id)
 		
 		if (country) {
@@ -12,7 +12,7 @@ const getOneCountry = async (req: Request, res: Response) => {
         }
 
 	}catch(error){
-		console.log( "failed to create country : "+ error.message )
+		console.log( "failed to create country : "+ error )
 	}
 }
 

@@ -4,7 +4,7 @@ import getOneCityService from '../../services/city/getOneCity.service'
 
 const getOneCity = async (req: Request, res: Response) => {
 	try {
-		const _id = new ObjectId(req.body.id)
+		const _id = new ObjectId(req.params.id)
 		const City = await getOneCityService(_id)
 		
 		if (City) {
@@ -12,7 +12,7 @@ const getOneCity = async (req: Request, res: Response) => {
         }
 
 	}catch(error){
-		console.log( "failed to create City : "+ error.message )
+		console.log( "failed to create City : "+ error )
 	}
 }
 

@@ -5,7 +5,7 @@ import deleteCountryService from '../../services/country/deleteCountry.service';
 
 const deleteCountry = async (req: Request, res: Response) => {
 	try {
-		const _id = new ObjectId(req.body.id) 
+		const _id = new ObjectId(req.params.id) 
 		const result = await deleteCountryService(_id)
 
 		if (result && result.deletedCount) {
@@ -16,8 +16,8 @@ const deleteCountry = async (req: Request, res: Response) => {
 			res.status(404).send(`Game with id ${_id} does not exist`);
 		}
 	} catch (error) {
-		console.error(error.message);
-		res.status(400).send(error.message);
+		console.error(error);
+		res.status(400).send(error);
 	}
 }
 

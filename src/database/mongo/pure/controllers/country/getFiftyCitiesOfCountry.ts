@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import getFiftyCitiesOfCountryService from '../../services/country/getFiftyAlleysOfCountry.service';
 
-const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
+const getFiftyCitiesOfCountry = async (_req: Request, res: Response) => {
 	try {
 		const result = await getFiftyCitiesOfCountryService()
 		
@@ -10,7 +10,7 @@ const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
         }
 
 	}catch(error){
-		console.log( "failed to create country : "+ error.message )
+		console.log( "failed to get 50 cities of 50 province of all countries : "+ error )
 	}
 }
 

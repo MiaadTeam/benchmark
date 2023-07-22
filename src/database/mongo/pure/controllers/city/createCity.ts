@@ -11,7 +11,7 @@ const createCity = async (req: Request, res: Response) => {
             : res.status(500).send("Failed to create a new City.");
 
 	}catch(error){
-		console.log( "failed to create City : "+ error.message )
+		console.log( "failed to create City : "+ error )
 	}
 }
 
