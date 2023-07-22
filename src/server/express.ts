@@ -4,14 +4,11 @@ import seedMongoDB from "../database/mongo/pure/seed";
 
 const ServerPort = 9900;
 
-// Initialize Express
 const app = express();
-
 app.use(express.json());
-// app.use(dogRoutes);
 
 (async () => {
-  process.argv.map(async (val, index, array) => {
+  process.argv.map(async (val, _index, array) => {
     if (val.includes("--mongo")) {
       await connectToMongoDB();
       
