@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import getFiftyCitiesOfCountryService from '../../services/country/getFiftyAlleysOfCountry.service';
+import getFiftyCitiesOfCountryService from '../../services/country/getFiftyCitiesOfCountry.service';
 
 const getFiftyCitiesOfCountry = async (_req: Request, res: Response) => {
 	try {

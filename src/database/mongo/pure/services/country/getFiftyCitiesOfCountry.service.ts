@@ -12,7 +12,7 @@ const getFiftyCitiesOfCountryService = async () => {
 				}
 			}
 		]
-	);
+	).toArray()
 }
 
 export default getFiftyCitiesOfCountryService
