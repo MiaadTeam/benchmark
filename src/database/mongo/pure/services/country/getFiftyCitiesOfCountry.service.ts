@@ -1,12 +1,12 @@
 import { collections } from "../..";
 
-const getFiftyAlleysOfCountryService = async () => {
+const getFiftyCitiesOfCountryService = async () => {
 	return collections.countries?.aggregate(
 		[
 			{
 				$lookup: {
-					from: 'countries',
-					localField: 'countries.provinceIds',
+					from: 'provinces',
+					localField: '_id',
 					foreignField: 'countryId',
 					as: 'countryProvinces',
 				}
@@ -15,4 +15,4 @@ const getFiftyAlleysOfCountryService = async () => {
 	);
 }
 
-export default getFiftyAlleysOfCountryService
+export default getFiftyCitiesOfCountryService

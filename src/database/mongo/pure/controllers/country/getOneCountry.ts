@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 import { ObjectId } from 'mongodb'
-import getOneCountryService from '../../services/country/getCountry.service'
+import getOneCountryService from '../../services/country/getOneCountry.service'
 
 const getOneCountry = async (req: Request, res: Response) => {
 	try {
