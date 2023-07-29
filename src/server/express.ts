@@ -1,4 +1,5 @@
 import express from "express";
+import { connectToMongoose } from "../database/mongo/mongoose";
 import { connectToMongoDB } from "../database/mongo/pure";
 import seedMongoDB from "../database/mongo/pure/seed";
 import errorMiddleware from "../middleware/error.middleware";
@@ -14,14 +15,21 @@ routes(app);
 
 (async () => {
   process.argv.map(async (val, _index, array) => {
-    if (val.includes("--mongo")) {
-      await connectToMongoDB();
-      
-      
+    if (val ==="--mongoose") {
+      await connectToMongoose();
       if (array[3] === "--seed") {
         await seedMongoDB()
       }
+      
+    } else if (val ==="--mongo") {
+      await connectToMongoDB();
+      if (array[3] === "--seed") {
+        await seedMongoDB()
+      }
+      
     }
+
+   
   })
 
   app.listen(ServerPort, () => {

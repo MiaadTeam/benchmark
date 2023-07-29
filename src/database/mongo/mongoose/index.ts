@@ -1,45 +1,23 @@
+import mongoose from 'mongoose';
 
-import * as Mongoose from 'mongoose';
-  
-let database: Mongoose.Connection;
-  
-export const connect = () => {
-    // Add your own uri below, here my dbName is UserDB
-    // and we are using the local mongodb
-    const uri =
-        'mongodb://localhost:27017/UserDB';
-  
-    if (database) {
-        return;
+const port = process.env.MONGOOSE_PORT
+const dbName = process.env.MONGOOSE_NAME
+
+const mongoConnectionString =
+    `mongodb://localhost:${port}/${dbName}?maxPoolSize=2-&w=majority`
+const options = {
+    autoIndex: false, // Don't build indexes
+    maxPoolSize: 10, // Maintain up to 10 socket connections
+    serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
+    socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
+    family: 4 // Use IPv4, skip trying IPv6
+  };
+
+export const connectToMongoose = async ()=>{
+    try {
+        await mongoose.connect(mongoConnectionString, options)
+        console.log(`Successfully connected to mongoose database:${dbName} `)
+    } catch (error) {
+        console.log(error)
     }
-    // In order to fix all the deprecation warnings, 
-    // below are needed while connecting
-	Mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useFindAndModify: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-    } as Mongoose.ConnectOptions);
-  
-    database = Mongoose.connection;
-    // When mentioned database is available and successfully connects
-    database.once('open', async () => {
-        console.log('Connected to database successfully');
-    });
-  
-    // In case of any error
-    database.on('error', () => {
-        console.log(`Error connecting to database. Check Whether mongoDB
-        installed or you can try to give open-source Mongo Atlas database`);
-    });
-  
-};
-  
-// Safer way to get disconnected
-export const disconnect = () => {
-    if (!database) {
-        return;
-    }
-  
-    Mongoose.disconnect();
-};
+}
