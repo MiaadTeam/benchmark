@@ -1,5 +1,6 @@
 import express from "express";
 import { connectToMongoose } from "../database/mongo/mongoose";
+import seedMongoose from "../database/mongo/mongoose/seed";
 import { connectToMongoDB } from "../database/mongo/pure";
 import seedMongoDB from "../database/mongo/pure/seed";
 import errorMiddleware from "../middleware/error.middleware";
@@ -18,7 +19,7 @@ routes(app);
     if (val ==="--mongoose") {
       await connectToMongoose();
       if (array[3] === "--seed") {
-        await seedMongoDB()
+        await seedMongoose()
       }
       
     } else if (val ==="--mongo") {
