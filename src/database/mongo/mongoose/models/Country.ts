@@ -6,12 +6,12 @@ export interface ICountryDTO {
 	name:string ,
 	abb: string,
 	population: number,
-	provinceIds: mongoose.Types.ObjectId []	
+	provinces: mongoose.Types.ObjectId []	
 }
 
 export interface ICountry extends Base, ICountryDTO, mongoose.Document<String> {}
 
-export const CountrySchema = new mongoose.Schema<ICountry>({
+export const CountrySchema:mongoose.Schema<ICountry> = new mongoose.Schema<ICountry>({
 	name: {
 		type: String,
 		required: true,
@@ -27,36 +27,33 @@ export const CountrySchema = new mongoose.Schema<ICountry>({
 		trim: true,
 	},
 	population: Number,
-	provinceIds:[mongoose.Types.ObjectId]
+	provinces:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref : 'Province'
+    }]
 });
 
-export const Country = mongoose.model("Country", CountrySchema)
+export const Country:mongoose.Model<ICountry> = mongoose.model("Country", CountrySchema)
 
-export function validateCountry(input: any): Joi.ValidationResult {
-    const schema = Joi.object({
-        name: Joi.string().trim().min(2).max(50).required(),
-        abb: Joi.string().trim().min(2).max(10).required(),
-        population: Joi.number().required(),
-        provinceIds: Joi.array().min(0).items(
-			Joi.object({
-				id: Joi.string().hex().length(24)
-			})
-		),
-    })
-
-    return schema.validate(input)
-}
-
-export function validateGetFiftyCityOfCountry(input: any): Joi.ValidationResult {
-    const schema = Joi.object({
-        countryId: Joi.object({
-				id: Joi.string().hex().length(24)
-		}),
-
-		provinceId: Joi.object({
+const createCountrySchema = Joi.object({
+	name: Joi.string().trim().min(2).max(50).required(),
+	abb: Joi.string().trim().min(2).max(10).required(),
+	population: Joi.number().required(),
+	provinces: Joi.array().min(0).items(
+		Joi.object({
 			id: Joi.string().hex().length(24)
 		})
-    })
+	),
+})
+export function validateCountry(input: any): Joi.ValidationResult {
+    return createCountrySchema.validate(input)
+}
 
-    return schema.validate(input)
+const getFiftySchema = Joi.object({
+	limit: Joi.number(),
+	pageNumber: Joi.number(),
+	countryId: Joi.string().hex().length(24)
+})
+export function validateGetFiftyCityOfCountry(input: any): Joi.ValidationResult {
+    return getFiftySchema.validate(input)
 }

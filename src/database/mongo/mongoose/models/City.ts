@@ -1,17 +1,18 @@
 import Joi from 'joi';
 import mongoose from 'mongoose';
 import { Base } from './Base.type';
+import { Province } from './Province';
 
 export interface ICityDTO {
 	name:string ,
 	abb: string,
 	population: number,
-	provinceId: mongoose.Types.ObjectId 	
+	province: mongoose.Types.ObjectId	
 }
 
 export interface ICity extends Base, ICityDTO, mongoose.Document<String> {}
 
-export const CitySchema = new mongoose.Schema<ICity> ({
+export const CitySchema: mongoose.Schema<ICity> = new mongoose.Schema<ICity> ({
 	name: {
 		type: String,
 		required: true,
@@ -27,10 +28,13 @@ export const CitySchema = new mongoose.Schema<ICity> ({
 		trim: true,
 	},
 	population: Number,
-	provinceId: mongoose.Types.ObjectId 
+	province: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: Province
+	} 
 });
 
-export const City = mongoose.model("City", CitySchema)
+export const City: mongoose.Model<ICity> = mongoose.model("City", CitySchema)
 
 export function validateCity(input: any): Joi.ValidationResult {
     const schema = Joi.object({
