@@ -1,12 +1,14 @@
 import express from "express";
+import "reflect-metadata";
 import { connectToMongoose } from "../database/mongo/mongoose";
 import seedMongoose from "../database/mongo/mongoose/seed";
 import { connectToMongoDB } from "../database/mongo/pure";
 import seedMongoDB from "../database/mongo/pure/seed";
+import { createTypeormConnection } from "../database/postgresql/typeorm";
 import errorMiddleware from "../middleware/error.middleware";
 import routes from "../routes";
 
-const ServerPort = 9900;
+const ServerPort = process.env.SERVER_PORT || 9900;
 
 const app = express();
 app.use(express.json());
@@ -27,10 +29,14 @@ routes(app);
       if (array[3] === "--seed") {
         await seedMongoDB()
       }
-      
+    } else if (val ==="--typeorm") {
+      createTypeormConnection();
+      if (array[3] === "--seed") {
+        await seedMongoDB()
+      }
     }
 
-   
+    
   })
 
   app.listen(ServerPort, () => {

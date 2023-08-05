@@ -8,11 +8,17 @@
     "joi": "^17.9.2",
     "mongodb": "^5.7.0",
     "mongoose": "^7.3.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pg": "^8.11.2",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
     "@types/express": "^4.17.17",
+    "@types/pg": "^8.10.2",
     "dotenv": "^16.3.1",
+    "node-pg-migrate": "^6.2.2",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.6"
