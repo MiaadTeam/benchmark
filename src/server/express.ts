@@ -4,6 +4,7 @@ import { connectToMongoose } from "../database/mongo/mongoose";
 import seedMongoose from "../database/mongo/mongoose/seed";
 import { connectToMongoDB } from "../database/mongo/pure";
 import seedMongoDB from "../database/mongo/pure/seed";
+import { createPrismaConnection } from "../database/postgresql/prisma-pg";
 import { createTypeormConnection } from "../database/postgresql/typeorm";
 import errorMiddleware from "../middleware/error.middleware";
 import routes from "../routes";
@@ -30,11 +31,16 @@ routes(app);
         await seedMongoDB()
       }
     } else if (val ==="--typeorm") {
-      createTypeormConnection();
+        createTypeormConnection();
       if (array[3] === "--seed") {
-        await seedMongoDB()
+        // await seedTypeOrm()
       }
-    }
+    } else if (val ==="--prisma") {
+        await createPrismaConnection();
+      if (array[3] === "--seed") {
+        // await seedPrisma()
+      }
+  }
 
     
   })

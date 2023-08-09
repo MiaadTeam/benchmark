@@ -1,5 +1,6 @@
 
 const getFiftyCitiesOfCountryService = async ( countryId: number,limit = 50, _pageNumber =1 ) => {
+	// TODO: write the proper query
 	// const input = countryId ? {_id : countryId} : {}
 	// 		return await Country.findAll( input )
 		// .({
@@ -17,6 +18,7 @@ const getFiftyCitiesOfCountryService = async ( countryId: number,limit = 50, _pa
 // 				}
 // 			}
 // 		}).exec()
+	return true
 }
 
 export default getFiftyCitiesOfCountryService

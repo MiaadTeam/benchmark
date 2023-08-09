@@ -1,6 +1,6 @@
 import Province from "../../repository/province";
 
-const deleteProvinceService = async (id: string) => {
+const deleteProvinceService = async (id: number) => {
 	return await Province.deleteOne(id);
 }
 

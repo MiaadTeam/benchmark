@@ -17,7 +17,6 @@ export const createTypeormConnection = () => {
     password: DB_PASS,
     database: DB_NAME,
     logging: false,
-   
   };
 
   return new DataSource(config);
