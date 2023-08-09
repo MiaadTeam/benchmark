@@ -31,8 +31,8 @@ model Province {
   abb         String?
   population  Int
   cities      City[]
-  country     Country?   @relation(fields: [countryId], references: [id])
-  countryId   Int?
+  country     Country   @relation(fields: [countryId], references: [id])
+  countryId   Int
 }
 
 model City {
@@ -40,6 +40,6 @@ model City {
   name        String     @unique
   abb         String?
   population  Int
-  province    Province?   @relation(fields: [provinceId], references: [id])
-  provinceId  Int?
+  province    Province   @relation(fields: [provinceId], references: [id])
+  provinceId  Int
 }
