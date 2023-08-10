@@ -1,12 +1,10 @@
 import { Request, Response } from 'express';
-import { ICityDTO } from '../../../dto/location.dto';
-import updateCityService from '../../city/updateCity.service';
-
+import updateCityService from '../../services/city/updateCity.service';
 const updateCity = async (req: Request, res: Response) => {
     const id = req?.params?.id;
 
     try {
-        const updatedCity: ICityDTO = req.body as ICityDTO;
+        const updatedCity = req.body;
         const _id =  Number(id) 
         const result = await updateCityService(_id, updatedCity)
 

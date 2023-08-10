@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import getOneCountryService from '../../country/getOneCountry.service'
+import getOneCountryService from '../../services/country/getOneCountry.service'
 
 const getOneCountry = async (req: Request, res: Response) => {
 	try {

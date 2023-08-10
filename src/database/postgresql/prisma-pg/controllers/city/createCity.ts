@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
-import { ICityDTO } from '../../../dto/location.dto';
-import createCityService from '../../city/createCity.service';
+import createCityService from '../../services/city/createCity.service';
 
 const createCity = async (req: Request, res: Response) => {
 	try{
-		const result = await createCityService( req.body as ICityDTO)
+		const result = await createCityService( req.body)
 
 		result
             ? res.status(201).send(`Successfully created a new City with id ${result.id}`)

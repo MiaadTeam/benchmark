@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express';
-import deleteCityService from '../../city/deleteCity.service';
+import deleteCityService from '../../services/city/deleteCity.service';
 
 const deleteCity = async (req: Request, res: Response) => {
 	try {

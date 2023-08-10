@@ -1,7 +1,6 @@
-import { ICityDTO } from "../../dto/location.dto"
-import City from "../../repository/city"
+import City from "../../repository/city";
 
-const createBulkCityService = async (CityInput: ICityDTO[] ) => {
+const createBulkCityService = async ( CityInput:any) => {
 	return await City.createMany(CityInput)	
 }
 

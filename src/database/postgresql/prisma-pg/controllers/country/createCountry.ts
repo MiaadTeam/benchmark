@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import createCountryService from '../../country/createCountry.service';
+import createCountryService from '../../services/country/createCountry.service';
 
 const createCountry = async (req: Request, res: Response) => {
 	try {

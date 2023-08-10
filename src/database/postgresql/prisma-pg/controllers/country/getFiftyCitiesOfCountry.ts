@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import getFiftyCitiesOfCountryService from '../../country/getFiftyCitiesOfCountry.service';
+import getFiftyCitiesOfCountryService from '../../services/country/getFiftyCitiesOfCountry.service';
 
 const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
 	try {
