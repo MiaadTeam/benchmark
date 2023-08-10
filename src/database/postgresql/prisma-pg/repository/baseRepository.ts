@@ -34,7 +34,7 @@ const BaseRepository = <
   Update extends ModelTypes[T]['Update'],
   Cursor extends ModelTypes[T]['Cursor'],
   Order extends ModelTypes[T]['Order'],
-  Delegate extends ModelTypes[T]['Delegate'],
+  // Delegate extends ModelTypes[T]['Delegate'],
   Scalar extends ModelScalarFields<T>
 >(
   modelName: T
@@ -356,7 +356,7 @@ const BaseRepository = <
       }) as ReturnType<typeof aggregate>;
     }
 
-    public static get model(): Delegate {
+    public static get model():any {
       // @ts-ignore
       return models[AbstractBaseRepository.modelName];
     }
