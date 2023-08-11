@@ -8,19 +8,9 @@ generator client {
   output = "../../../../../node_modules/.prisma/client"
 }
 
-// prisma repo generator
-generator repo {
-  provider = "prisma-repo"
-  output   = "../repository"
-  query    = true
-  warn     = true
-  info     = true
-  error    = true
-}
-
 model Country {
   id          Int        @default(autoincrement()) @id
-  name        String     @unique
+  name        String     
   abb         String?
   population  Int
   provinces   Province[]
@@ -28,7 +18,7 @@ model Country {
 
 model Province {
   id          Int        @default(autoincrement()) @id
-  name        String     @unique
+  name        String     
   abb         String?
   population  Int
   cities      City[]
@@ -38,7 +28,7 @@ model Province {
 
 model City {
   id          Int        @default(autoincrement()) @id
-  name        String     @unique
+  name        String     
   abb         String?
   population  Int
   province    Province   @relation(fields: [provinceId], references: [id])
