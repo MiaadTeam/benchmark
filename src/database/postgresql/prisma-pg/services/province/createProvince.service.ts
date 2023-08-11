@@ -1,7 +1,11 @@
-import Province from '../../repository/province';
+import { PrismaClient } from "@prisma/client";
 
-const createProvinceService = async (provinceInput) => {
-	return await Province.create(provinceInput);	
+const prisma = new PrismaClient()
+
+const createProvinceService = async (provinceInput: any) => {
+	return await prisma.province.create({
+		data: provinceInput
+	});	
 }
 
 export default createProvinceService

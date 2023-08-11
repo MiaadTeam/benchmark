@@ -1,9 +1,13 @@
-import { ICityDTO } from "../../dto/location.dto";
-import City from "../../repository/city";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient()
 
 
-const createCityService = async (CityInput : ICityDTO) => {
-	return await City.create(CityInput);	
+const createCityService = async (CityInput : any) => {
+	return await prisma.city.create({
+
+		data: CityInput
+	});	
 }
 
 export default createCityService

@@ -1,7 +1,9 @@
-import City from "../../repository/city";
+import { PrismaClient } from "@prisma/client"
+
+const prisma = new PrismaClient()
 
 const createBulkCityService = async ( CityInput:any) => {
-	return await City.createMany(CityInput)	
+	return await prisma.city.createMany({ data: CityInput})	
 }
 
 export default createBulkCityService

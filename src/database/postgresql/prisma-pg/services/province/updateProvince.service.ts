@@ -1,7 +1,15 @@
-import Province from "../../repository/province";
+import { PrismaClient } from "@prisma/client";
 
-const updateProvinceService = async ( _id:number, updatedProvince ) => {
-	return await Province.update(_id , updatedProvince );
+const prisma = new PrismaClient()
+
+const updateProvinceService = async (_id: number, updatedProvince:any ) => {
+	return await prisma.province.update({
+
+		where: {
+			id: _id
+		},
+		data: updatedProvince
+	} );
 }
 
 export default updateProvinceService

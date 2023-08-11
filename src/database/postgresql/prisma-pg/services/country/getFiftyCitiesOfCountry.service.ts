@@ -1,24 +1,38 @@
+import { PrismaClient } from "@prisma/client"
+const prisma = new PrismaClient()
 
-const getFiftyCitiesOfCountryService = async ( countryId: number,limit = 50, _pageNumber =1 ) => {
-	// TODO: write the proper query
-	// const input = countryId ? {_id : countryId} : {}
-	// 		return await Country.findAll( input )
-		// .({
-// 			path: 'provinces',
-// 			options: {
-// 				limit: limit,
-// 			},
-// 			populate: {
-// 				path: 'cities',
-// 				model: City,
-// 				options: {
-// 					limit: limit,
-// 					// sort: { created: -1},
-//        				// skip: pageNumber*limit
-// 				}
-// 			}
-// 		}).exec()
-	return true
+const getFiftyCitiesOfCountryService = async (countryId?:number, limit = 50, _pageNumber =1 ) => {
+	return	await prisma.country.findMany({
+		where:{ id: countryId},
+		select: {
+			name: true,
+			abb: true,
+			population:true,
+			provinces: {
+				take: limit,
+				orderBy: {
+					population: "desc"
+				},
+				select: {
+					name: true,
+					abb: true,
+					population:true,
+					cities: {
+						select: {
+							name: true,
+							abb: true,
+							population:true,
+						},
+						take: limit,
+						orderBy: {
+							population: "desc"
+						},
+					}
+				}
+			}
+		}
+	
+	})
 }
 
 export default getFiftyCitiesOfCountryService
