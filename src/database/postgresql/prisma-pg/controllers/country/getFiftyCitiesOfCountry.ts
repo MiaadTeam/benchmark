@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import mongoose from 'mongoose';
 import getFiftyCitiesOfCountryService from '../../services/country/getFiftyCitiesOfCountry.service';
 
 const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
@@ -7,8 +6,8 @@ const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
 		const { limit, pageNumber, countryId } = req.body
 		// validateGetFiftyCityOfCountry({ limit, pageNumber, countryId })
 		
-		const countryObjectId = countryId ? new mongoose.Types.ObjectId(req.params.id): countryId
-		const result = await getFiftyCitiesOfCountryService( countryObjectId, limit, pageNumber )
+		const countryNumberId = countryId ? Number(req.params.id): countryId
+		const result = await getFiftyCitiesOfCountryService( countryNumberId, limit, pageNumber )
 		
 		if (result) {
             res.status(200).send(result);
