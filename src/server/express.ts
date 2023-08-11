@@ -5,6 +5,7 @@ import seedMongoose from "../database/mongo/mongoose/seed";
 import { connectToMongoDB } from "../database/mongo/pure";
 import seedMongoDB from "../database/mongo/pure/seed";
 import { createPrismaConnection } from "../database/postgresql/prisma-pg";
+import seedPrisma from '../database/postgresql/prisma-pg/seed';
 import { createTypeormConnection } from "../database/postgresql/typeorm";
 import errorMiddleware from "../middleware/error.middleware";
 import routes from "../routes";
@@ -32,7 +33,7 @@ try {
       } else if (val ==="--prisma") {
           await createPrismaConnection();
         if (array[3] === "--seed") {
-          // await seedPrisma()
+          await seedPrisma()
         }
       }
     })
