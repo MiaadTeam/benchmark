@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 import path from "path";
-import { SeedCountry, SeedState } from '../../dataset.type';
+import { SeedCountry, SeedState } from '../dataset/dataset.type';
 import { ICountryDTO } from "./dto/location.dto";
 import createCityService from './services/city/createCity.service';
 import createCountryService from './services/country/createCountry.service';

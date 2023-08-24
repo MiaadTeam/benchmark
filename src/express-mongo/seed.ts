@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import { Document, InsertOneResult, ObjectId } from "mongodb";
 import path from "path";
-import { SeedCity, SeedCountry, SeedState } from '../../dataset.type';
+import { SeedCity, SeedCountry, SeedState } from '../dataset/dataset.type';
 import City from "./models/City";
 import Country from "./models/Country";
 import Province from "./models/Province";

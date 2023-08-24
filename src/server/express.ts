@@ -1,12 +1,12 @@
 import express from "express";
 import "reflect-metadata";
-import { connectToMongoose } from "../database/mongo/mongoose";
-import seedMongoose from "../database/mongo/mongoose/seed";
-import { connectToMongoDB } from "../database/mongo/pure";
-import seedMongoDB from "../database/mongo/pure/seed";
-import { createPrismaConnection } from "../database/postgresql/prisma-pg";
-import seedPrisma from '../database/postgresql/prisma-pg/seed';
-import { createTypeormConnection } from "../database/postgresql/typeorm";
+import { createPrismaConnection } from "../epxress-pg-prisma";
+import seedPrisma from '../epxress-pg-prisma/seed';
+import { connectToMongoDB } from "../express-mongo";
+import seedMongoDB from "../express-mongo/seed";
+import { connectToMongoose } from "../express-mongoose";
+import seedMongoose from "../express-mongoose/seed";
+import { createTypeormConnection } from "../express-pg-typeorm";
 import errorMiddleware from "../middleware/error.middleware";
 import routes from "../routes";
 

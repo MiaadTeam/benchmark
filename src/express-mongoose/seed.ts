@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import mongoose from "mongoose";
 import path from "path";
-import { SeedCity, SeedCountry, SeedState } from '../../dataset.type';
+import { SeedCity, SeedCountry, SeedState } from '../dataset/dataset.type';
 import { ICityDTO } from "./models/City";
 import { ICountryDTO } from "./models/Country";
 import { IProvinceDTO } from "./models/Province";
