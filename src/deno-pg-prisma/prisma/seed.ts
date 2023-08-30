@@ -2,12 +2,12 @@ import { readFile } from "fs/promises";
 import path from "path";
 import { SeedCountry, SeedState } from '../../dataset/dataset.type';
 import { ICountryDTO } from "../dto/location.dto";
+import { PrismaClient } from "../generated/client";
 import createCityService from '../services/city/createCity.service';
 import createCountryService from '../services/country/createCountry.service';
 import createProvinceService from "../services/province/createProvince.service";
 
 // import { load } from "https://deno.land/std@0.200.0/dotenv/mod.ts";
-import { PrismaClient } from "../generated/client";
 
 // const envVars = await load();
 
@@ -93,7 +93,7 @@ const insertCity = async (seedCity:any,  provinceId:number) => {
 		abb: makeAbb(seedCity.name),
 		population: generateRandom(10000, 9999999),
 		provinceId,
-		})
+		}, prisma)
 	return  city.id
 }
 
@@ -104,6 +104,5 @@ const generateRandom = (min = 0, max = 100)=> {
 }
 
 const makeAbb = (name:string) => name.slice(0,3)
-
 
 export default seedPrisma
