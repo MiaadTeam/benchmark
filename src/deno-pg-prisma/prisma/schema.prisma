@@ -1,0 +1,38 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DENO_PRISMA_DB_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["deno"]
+  output          = "../generated/client"
+}
+
+model Country {
+  id          Int        @default(autoincrement()) @id
+  name        String     
+  abb         String?
+  population  Int
+  provinces   Province[]
+}
+
+model Province {
+  id          Int        @default(autoincrement()) @id
+  name        String     
+  abb         String?
+  population  Int
+  cities      City[]
+  country     Country   @relation(fields: [countryId], references: [id])
+  countryId   Int
+}
+
+model City {
+  id          Int        @default(autoincrement()) @id
+  name        String     
+  abb         String?
+  population  Int
+  province    Province   @relation(fields: [provinceId], references: [id])
+  provinceId  Int
+}
+
