@@ -4,7 +4,6 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "./../../generated/client": "^5.1.1",
     "@types/lodash": "^4.14.196",
     "express": "^4.18.2",
     "joi": "^17.9.2",
