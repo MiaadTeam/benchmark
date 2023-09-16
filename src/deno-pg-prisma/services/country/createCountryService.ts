@@ -1,4 +1,4 @@
-import { PrismaClient } from './../../generated/client/deno/edge.ts';
+import { PrismaClient } from '../../generated/client/index.js';
 
 const createCountryService = async (countryInput: any, runningClient?:any) => {
 	const prisma =runningClient || new PrismaClient()
