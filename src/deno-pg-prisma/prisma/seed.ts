@@ -1,11 +1,11 @@
-import { readFile } from "fs/promises";
+import { readFile } from "https://deno.land/std@0.110.0/node/fs/promises.ts";
 import path from "path";
-import { SeedCountry, SeedState } from '../../dataset/dataset.type';
-import { ICountryDTO } from "../dto/location.dto";
-import { PrismaClient } from "../generated/client/deno/edge.ts";
-import createCityService from '../services/city/createCity.service';
-import createCountryService from '../services/country/createCountry.service';
-import createProvinceService from "../services/province/createProvince.service";
+import { SeedCountry, SeedState } from '../dto/dataset.ts';
+import { ICountryDTO } from "../dto/locationDto.ts";
+import { PrismaClient } from "../generated/client/index.js";
+import * as createCityService from '../services/city/createCityService.ts';
+import createCountryService from '../services/country/createCountryService.ts';
+import createProvinceService from "../services/province/createProvinceService.ts";
 
 // import { load } from "https://deno.land/std@0.200.0/dotenv/mod.ts";
 
