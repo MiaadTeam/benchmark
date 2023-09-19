@@ -7,7 +7,11 @@ const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
 		// validateGetFiftyCityOfCountry({ limit, pageNumber, countryId })
 		
 		const countryNumberId = countryId ? Number(req.params.id): countryId
+		
+		const start = Date.now()
 		const result = await getFiftyCitiesOfCountryService( countryNumberId, limit, pageNumber )
+		const end = Date.now()
+		console.log("Elapsed time (ms): ",end - start)
 		
 		if (result) {
             res.status(200).send(result);
