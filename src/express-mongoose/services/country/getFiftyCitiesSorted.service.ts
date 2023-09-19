@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { City } from "../../models/City";
 import { Country } from "../../models/Country";
 
-const getFiftyCitiesOfCountryService = async ( countryId:mongoose.Types.ObjectId,limit = 50, _pageNumber =1 ) => {
+const getFiftyCitiesNoSortService = async ( countryId:mongoose.Types.ObjectId, pageNumber=0, limit = 50, _pageNumber =1 ) => {
 	const input = countryId ? {_id : countryId} : {}
 	return await Country.find( input )
 		.populate({
@@ -15,11 +15,11 @@ const getFiftyCitiesOfCountryService = async ( countryId:mongoose.Types.ObjectId
 				model: City,
 				options: {
 					limit: limit,
-					// sort: { created: -1},
-       				// skip: pageNumber*limit
+					sort: { created: -1},
+       				skip: pageNumber*limit
 				}
 			}
 		}).exec()
 }
 
-export default getFiftyCitiesOfCountryService
+export default getFiftyCitiesNoSortService
