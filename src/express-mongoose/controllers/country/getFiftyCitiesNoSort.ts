@@ -8,9 +8,11 @@ const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
 		const { limit, pageNumber, countryId } = req.body
 		validateGetFiftyCityOfCountry({ limit, pageNumber, countryId })
 		
+		const start = Date.now()
+		console.log("Start :", start)	
+		
 		const countryObjectId = countryId ? new mongoose.Types.ObjectId(req.params.id): countryId
 
-		const start = Date.now()
 		const result = await getFiftyCitiesNoSortService( countryObjectId, limit, pageNumber )
 		const end = Date.now()
 		console.log("Elapsed time (ms): ",end - start)

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { validateGetFiftyCityOfCountry } from '../../models/Country';
-import getFiftyCitiesOfCountryService from '../../services/country/getFiftyCitiesSorted.service';
+import getFiftyCitiesSortedService from '../../services/country/getFiftyCitiesSorted.service';
 
-const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
+const getFiftyCitiesSorted = async (req: Request, res: Response) => {
 	try {
 		const { limit, pageNumber, countryId } = req.body
 		validateGetFiftyCityOfCountry({ limit, pageNumber, countryId })
@@ -11,7 +11,7 @@ const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
 		const countryObjectId = countryId ? new mongoose.Types.ObjectId(req.params.id): countryId
 
 		const start = Date.now()
-		const result = await getFiftyCitiesOfCountryService( countryObjectId, limit, pageNumber )
+		const result = await getFiftyCitiesSortedService( countryObjectId, limit, pageNumber )
 		const end = Date.now()
 		console.log("Elapsed time (ms): ",end - start)
 
@@ -24,4 +24,4 @@ const getFiftyCitiesOfCountry = async (req: Request, res: Response) => {
 	}
 }
 
-export default getFiftyCitiesOfCountry
+export default getFiftyCitiesSorted
