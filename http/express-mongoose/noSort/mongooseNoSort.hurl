@@ -1,1 +1,1 @@
-GET http://localhost:9900/mongoose/country/fiftyCitiesOfFiftyProvinces
+GET http://localhost:9900/mongoose/country/fiftyCitiesOfFiftyProvincesNoSort
