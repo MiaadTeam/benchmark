@@ -1,5 +1,8 @@
 import express from "express";
+import { graphqlHTTP } from "express-graphql";
 import "reflect-metadata";
+import { root, schema } from "../api/graphql/root";
+import restRoutes from "../api/rest";
 import { createPrismaConnection } from "../epxress-pg-prisma";
 import seedPrisma from '../epxress-pg-prisma/seed';
 import { connectToMongoDB } from "../express-mongo";
@@ -8,10 +11,13 @@ import { connectToMongoose } from "../express-mongoose";
 import seedMongoose from "../express-mongoose/seed";
 import { createTypeormConnection } from "../express-pg-typeorm";
 import errorMiddleware from "../middleware/error.middleware";
-import routes from "../routes";
 
-const ServerPort = process.env.SERVER_PORT || 9900;
+const SERVER_PORT = process.env.SERVER_PORT || 9900;
+let ENDPOINT = ""
+
 try {
+  const app = express();
+  
   (async () => {
     process.argv.map(async (val, _index, array) => {
       if (val ==="--mongoose") {
@@ -36,15 +42,27 @@ try {
           await seedPrisma()
         }
       }
+
+      if (array[3] === "--graphql") {
+        app.use(
+          "/graphql",
+          graphqlHTTP({
+            schema: schema,
+            rootValue: root,
+            graphiql:true
+          })
+        );
+        ENDPOINT = "/graphql"
+      } else {
+        restRoutes(app);
+      }
     })
-  
-    const app = express();
+    
     app.use(express.json());
     app.use(errorMiddleware)
-    routes(app);
     
-    app.listen(ServerPort, () => {
-      console.log(`Express server is up at http://localhost:${ServerPort}`);
+    app.listen(SERVER_PORT, () => {
+      console.log(`Express server is up at http://localhost:${SERVER_PORT+ENDPOINT}`);
     });
   })();
 } catch (error) {
