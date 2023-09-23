@@ -1,13 +1,12 @@
-import getFiftyCitiesNoSortService from '../../express-mongoose/services/country/getFiftyCitiesNoSort.service';
 var { buildSchema } = require("graphql")
 
 // Construct a schema, using GraphQL schema language
 // type mongooseCities = Promise<Omit<mongoose.Document<unknown, {}, ICountry> & ICountry & Required<{
-//   _id: String;
-// }>, never>[]>
- 
-// graphql models
-export const schema =buildSchema( `
+    //   _id: String;
+    // }>, never>[]>
+    
+    // graphql models
+    export const schema =buildSchema( `
     type Country{
         id: Int
         name: String
@@ -35,17 +34,26 @@ export const schema =buildSchema( `
         provinceId:Int
     }
     
+    type Testy {
+        name: String
+    }
+
     type Query{
-        getFiftyCities: [Country]  
+        getFiftyCities: Testy
     }
 `);
 
-// Graphql Resolvers
+// The root provides a resolver function for each API endpoint
 export const root = {
-  Query: {
-    getFiftyCities:getFiftyCitiesNoSortService ,
-  },
-};
+    Query: {
+        getFiftyCities: () => {
+            console.log('=============  we: String ============ : ');
+            return {
+                name: 'hmd'
+            }
+        },
+    }
+}
 
 // Graphql schema
 // export const schema = makeExecutableSchema({
@@ -55,4 +63,3 @@ export const root = {
 
 
 
-// The root provides a resolver function for each API endpoint

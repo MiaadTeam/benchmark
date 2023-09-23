@@ -11,12 +11,12 @@ import { connectToMongoose } from "../express-mongoose";
 import seedMongoose from "../express-mongoose/seed";
 import { createTypeormConnection } from "../express-pg-typeorm";
 import errorMiddleware from "../middleware/error.middleware";
-
-const SERVER_PORT = process.env.SERVER_PORT || 9900;
 let ENDPOINT = ""
 
 try {
   const app = express();
+  
+  const SERVER_PORT = process.env.SERVER_PORT || 9900;
   
   (async () => {
     process.argv.map(async (val, _index, array) => {
