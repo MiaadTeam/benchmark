@@ -14,14 +14,14 @@ In src directory there are these directories:
 routes: contains the country routes to fetch our mentioned query 
 server: contains express and deno which loads and seeds database via terminal arguments
 dataset: contains almost all of contries, provinces and cities from kaggle.com
-other directories are named in <server-database-orm> format, e.g:`express-pg-prisma`
+other directories are named in <server-database-orm> format, e.g:`express-prisma`
 
 We explain how to start with each one
 
-**express-pg-prisma:**
+**express-prisma:**
 1.We have provided a docker file for the database creation,
   so in the project root we compose it:
-   `docker-compose -f ./prisma/docker-compose.yml up -d`
+   `docker-compose -f ./src/express-prisma/prisma/docker-compose.yml up -d`
 2.Now you can see it running with: 
    `docker-compose ps`
 3.To create prisma/prisma.schema tables (it will make init migrations):

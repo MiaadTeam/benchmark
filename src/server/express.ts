@@ -3,13 +3,13 @@ import { graphqlHTTP } from "express-graphql";
 import "reflect-metadata";
 import { root, schema } from "../api/graphql/root";
 import restRoutes from "../api/rest";
-import { createPrismaConnection } from "../epxress-pg-prisma";
-import seedPrisma from '../epxress-pg-prisma/seed';
 import { connectToMongoDB } from "../express-mongo";
 import seedMongoDB from "../express-mongo/seed";
 import { connectToMongoose } from "../express-mongoose";
 import seedMongoose from "../express-mongoose/seed";
-import { createTypeormConnection } from "../express-pg-typeorm";
+import { createPrismaConnection } from "../express-prisma";
+import seedPrisma from '../express-prisma/seed';
+import { createTypeormConnection } from "../express-typeorm";
 import errorMiddleware from "../middleware/error.middleware";
 let ENDPOINT = ""
 

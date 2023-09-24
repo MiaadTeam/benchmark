@@ -1,5 +1,5 @@
 import { Router } from "express"
-import createCountry from '../../express-pg-typeorm/controllers/country/createCountry'
+import createCountry from '../../express-typeorm/controllers/country/createCountry'
 const router = Router()
 
 // router.get( "/fiftyCitiesOfFiftyProvinces", getFiftyCitiesOfCountry )
