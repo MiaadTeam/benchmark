@@ -8,12 +8,12 @@ basic setting:
 1.To use benchmarking repo, first we clone the repo:
    `git clone https://github.com/MiaadTeam/benchmark.git`
 2.To install the depedencies change directory to the project root we enter: `yarn` 
-3.Create a `.env` file like the `.env.example` file
+3.Create a `.env` file like the `example.env` file
 
 In src directory there are these directories:
 routes: contains the country routes to fetch our mentioned query 
 server: contains express and deno which loads and seeds database via terminal arguments
-dataset: contains almost all of contries, provinces and cities from kaggle.com
+dataset: contains almost all of countries, provinces and cities from kaggle.com
 other directories are named in <server-database-orm> format, e.g:`express-prisma`
 
 We explain how to start with each one
@@ -21,7 +21,8 @@ We explain how to start with each one
 **express-prisma:**
 1.We have provided a docker file for the database creation,
   so in the project root we compose it:
-   `docker-compose -f ./src/express-prisma/prisma/docker-compose.yml up -d`
+   `cd ./src/express-prisma/prisma`
+   `docker-compose up -d`
 2.Now you can see it running with: 
    `docker-compose ps`
 3.To create prisma/prisma.schema tables (it will make init migrations):
@@ -36,6 +37,8 @@ We explain how to start with each one
    `yarn express --prisma`
 7.Although we are able to query for the CRUD of the counties,
   we are going to fetch our Prisma Postgresql benchmark query:
+   ``
+  or
    `curl http://localhost:9900/prisma/country/fiftyCitiesOfFiftyProvinces`
 as the result we can will see such a result:
 
@@ -52,5 +55,7 @@ as the result we can will see such a result:
 4.Although we are able to query for the CRUD of the counties,
   we are going to fetch our benchmark query:
    `curl http://localhost:9900/mongoose/country/fiftyCitiesOfFiftyProvinces`
+
+   `hurl ../../http/express-mongoose-rest/sorted/mongooseSorted.hurl --summary -m 1000000`
 
 ![alt text](Isolated.png "Title")
