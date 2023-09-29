@@ -57,6 +57,7 @@ try {
           "/graphql",
           graphqlHTTP({
             schema,
+            graphiql:true
           })
         );
         ENDPOINT = "/graphql"
