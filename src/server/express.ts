@@ -1,7 +1,7 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import "reflect-metadata";
-import { root, schema } from "../api/graphql/root";
+import { schema } from "../api/graphql/root";
 import restRoutes from "../api/rest";
 import { connectToMongoDB } from "../express-mongo";
 import seedMongoDB from "../express-mongo/seed";
@@ -11,7 +11,7 @@ import { createPrismaConnection } from "../express-prisma";
 import seedPrisma from '../express-prisma/seed';
 import { createTypeormConnection } from "../express-typeorm";
 import errorMiddleware from "../middleware/error.middleware";
-let ENDPOINT = ""
+let ENDPOINT = "" // default for RestApi mode
 
 try {
   const app = express();
@@ -19,6 +19,11 @@ try {
   const SERVER_PORT = process.env.SERVER_PORT || 9900;
   
   (async () => {
+    /**
+     * array[2] is used for db connection, in both Restful and Graphql modes
+     * default is Rest mode
+     * and seeding is done via the array[3] argument 
+     */
     process.argv.map(async (val, _index, array) => {
       if (val ==="--mongoose") {
         await connectToMongoose();
@@ -43,13 +48,15 @@ try {
         }
       }
 
+      /**
+       * after seeding in Rest Mode,
+       * server can be reconnected in the Graphql mode via the array[3] argument
+       */
       if (array[3] === "--graphql") {
         app.use(
           "/graphql",
           graphqlHTTP({
-            schema: schema,
-            rootValue: root,
-            graphiql:true
+            schema,
           })
         );
         ENDPOINT = "/graphql"

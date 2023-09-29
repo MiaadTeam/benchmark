@@ -1,13 +1,14 @@
-var { buildSchema } = require("graphql")
+import { makeExecutableSchema } from "@graphql-tools/schema";
+import getFiftyCitiesOfCountryService from "../../express-prisma/services/country/getFiftyCitiesOfCountry.service";
 
 // Construct a schema, using GraphQL schema language
 // type mongooseCities = Promise<Omit<mongoose.Document<unknown, {}, ICountry> & ICountry & Required<{
     //   _id: String;
     // }>, never>[]>
     
-    // graphql models
-    export const schema =buildSchema( `
-    type Country{
+// graphql models
+export const typeDefs = `
+    type Country {
         id: Int
         name: String
         abb: String
@@ -15,7 +16,7 @@ var { buildSchema } = require("graphql")
         provinces:[Province]
     }
     
-    type Province{
+    type Province {
         id:Int      
         name:String     
         abb:String
@@ -34,32 +35,44 @@ var { buildSchema } = require("graphql")
         provinceId:Int
     }
     
-    type Testy {
-        name: String
+    type Test {
+        hello: String
     }
 
-    type Query{
-        getFiftyCities: Testy
+    type Query {
+        helloWorld: Test
     }
-`);
+
+    type Query {
+        getFiftyCitiesOfCountry(
+            limit: Int,
+            pageNumber:Int
+        ):[Country]
+    }
+`
 
 // The root provides a resolver function for each API endpoint
-export const root = {
+export const resolvers = {
     Query: {
-        getFiftyCities: () => {
-            console.log('=============  we: String ============ : ');
+        helloWorld: () => {
             return {
-                name: 'hmd'
+                hello: 'world!'
             }
+        },
+        getFiftyCitiesOfCountry: async(
+            _: unknown,
+            args: {limit:number,pageNumber:number},
+        ) => {
+            return await getFiftyCitiesOfCountryService(args.limit,args.pageNumber)
         },
     }
 }
 
 // Graphql schema
-// export const schema = makeExecutableSchema({
-//   resolvers,
-//   typeDefs: graphqlModels,
-// });
+export const schema = makeExecutableSchema({
+  resolvers,
+  typeDefs,
+});
 
 
 
