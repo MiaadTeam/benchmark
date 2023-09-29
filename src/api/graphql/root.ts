@@ -1,5 +1,5 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import getFiftyCitiesOfCountryService from "../../express-prisma/services/country/getFiftyCitiesOfCountry.service";
+import getFiftyCitiesOfCountryService from "../../prisma-express-rest/services/country/getFiftyCitiesOfCountry.service";
 
 // Construct a schema, using GraphQL schema language
 // type mongooseCities = Promise<Omit<mongoose.Document<unknown, {}, ICountry> & ICountry & Required<{

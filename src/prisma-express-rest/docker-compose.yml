@@ -11,13 +11,13 @@ services:
     ports:
       - '5442:5432'
 
-  # prisma-postgres-api:
+  # rest-express-prisma:
   #   stdin_open: true
   #   restart: always
   #   build:
   #     context: .
-  #     dockerfile: ExpressPrismaDockerfile
-  #   container_name: prisma-postgres-api
+  #     dockerfile: Dockerfile
+  #   container_name: rest-express-prisma
   #   depends_on:
   #     - postgres
   #   ports:

@@ -1,9 +1,9 @@
 import { Router } from "express"
-import createCountry from "../../express-prisma/controllers/country/createCountry"
-import deleteCountry from "../../express-prisma/controllers/country/deleteCountry"
-import getFiftyCitiesOfCountry from "../../express-prisma/controllers/country/getFiftyCitiesOfCountry"
-import getOneCountry from "../../express-prisma/controllers/country/getOneCountry"
-import updateCountry from "../../express-prisma/controllers/country/updateCountry"
+import createCountry from "../../prisma-express-rest/controllers/country/createCountry"
+import deleteCountry from "../../prisma-express-rest/controllers/country/deleteCountry"
+import getFiftyCitiesOfCountry from "../../prisma-express-rest/controllers/country/getFiftyCitiesOfCountry"
+import getOneCountry from "../../prisma-express-rest/controllers/country/getOneCountry"
+import updateCountry from "../../prisma-express-rest/controllers/country/updateCountry"
 const router = Router()
 
 router.get( "/fiftyCitiesOfFiftyProvinces", getFiftyCitiesOfCountry )

@@ -3,7 +3,7 @@ then in the command line enter this commands:
 to create database:
 	docker-compose up -d
 	docker ps
-then change directory to `/deno-pg-prisma`,
+then change directory to `/prisma-deno-rest`,
 to create prisma/prisma.schema tables (it will make init migrations):
 	deno run --allow-read --allow-env --allow-write npm:prisma@^4.5 init
 
