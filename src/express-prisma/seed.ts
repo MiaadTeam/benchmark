@@ -8,7 +8,7 @@ import createProvinceService from "./services/province/createProvince.service";
 
 const seedPrisma = async() => {
 	console.log("started to seed prisma ...");
-	
+
 	const dataset = await readDataSet()
 	await insertAllCountries(dataset)
 	console.log("seeded prisma sucessfully!");
@@ -16,7 +16,7 @@ const seedPrisma = async() => {
 	
 const readDataSet = async () => {
 	const raw: any = await readFile(
-		path.join(__dirname, "../../dataset.json"),
+		path.join(__dirname, "../dataset/"),
 		'utf-8'
 	)
 	return JSON.parse(raw)
