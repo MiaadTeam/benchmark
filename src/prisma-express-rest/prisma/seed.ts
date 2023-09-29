@@ -1,10 +1,10 @@
 import { readFile } from "fs/promises";
 import path from "path";
-import { SeedCountry, SeedState } from '../dataset/dataset.type';
-import { ICountryDTO } from "./dto/location.dto";
-import createCityService from './services/city/createCity.service';
-import createCountryService from './services/country/createCountry.service';
-import createProvinceService from "./services/province/createProvince.service";
+import { SeedCountry, SeedState } from '../../dataset/dataset.type';
+import { ICountryDTO } from "../dto/location.dto";
+import createCityService from '../services/city/createCity.service';
+import createCountryService from '../services/country/createCountry.service';
+import createProvinceService from "../services/province/createProvince.service";
 
 const seedPrisma = async() => {
 	console.log("started to seed prisma ...");
@@ -16,7 +16,7 @@ const seedPrisma = async() => {
 	
 const readDataSet = async () => {
 	const raw: any = await readFile(
-		path.join(__dirname, "../dataset/"),
+		path.join(__dirname, "../../dataset/"),
 		'utf-8'
 	)
 	return JSON.parse(raw)
