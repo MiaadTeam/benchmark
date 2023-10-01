@@ -1,4 +1,7 @@
-POST http://localhost:9900/graphql
+#run me:
+#hurl --variables-file .env getFiftyCitiesOfCountry.hurl
+
+POST http://localhost:{{SERVER_PORT}}/graphql
 
 ```graphql
 {
