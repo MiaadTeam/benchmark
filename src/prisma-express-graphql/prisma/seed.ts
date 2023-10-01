@@ -16,7 +16,7 @@ const seedPrisma = async() => {
 	
 const readDataSet = async () => {
 	const raw: any = await readFile(
-		path.join(__dirname, "../../dataset/"),
+		path.join(__dirname, "../../dataset/dataset.json"),
 		'utf-8'
 	)
 	return JSON.parse(raw)
