@@ -37,7 +37,7 @@ export type SeedCountry = {
 }
 
 
-const sampleCountry = {
+export const sampleCountry = {
 	"id": 239,
 	"name": "Venezuela",
 	"iso3": "VEN",
