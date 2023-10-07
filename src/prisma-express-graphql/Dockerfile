@@ -1,9 +1,12 @@
-FROM node:alpine
-WORKDIR /src/express-prisma
-COPY ../../package*.json ./
-COPY ../../server  ./
-COPY ../../.gitingnore  ./
-COPY prisma ./
-COPY .env ./
-COPY ../../tsconfig.json ./
+FROM node:14 AS builder
+
+WORKDIR /app
+COPY package*.json ./
+COPY prisma ./prisma/
+RUN yarn 
+
 COPY . .
+RUN yarn build
+EXPOSE 3040
+
+CMD [ "yarn", "run", "start:migrate" ]

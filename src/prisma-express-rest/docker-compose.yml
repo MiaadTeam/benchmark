@@ -1,6 +1,10 @@
+#first stop the docker and remove the containers:
+#docker stop $(docker ps -a -q)
+#docker rm $(docker ps -a -q)
+
 version: '3.8'
 services:
-  postgres:
+  db:
     image: postgres:13
     restart: always
     environment:
@@ -8,20 +12,27 @@ services:
       - POSTGRES_PASSWORD=benchmark
     volumes:
       - postgres:/var/lib/postgresql/data
+    env_file:
+      - .env
     ports:
-      - '5442:5432'
+      - ${DB_PORT}:${PG_PORT}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://db:${PG_PORT}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
 
-  # rest-express-prisma:
-  #   stdin_open: true
-  #   restart: always
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: rest-express-prisma
-  #   depends_on:
-  #     - postgres
-  #   ports:
-  #     - "3000:3000"
+  server:
+    stdin_open: true
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: server
+    depends_on:
+      - "db"
+    ports:
+      - "3050:3000"
 
 volumes:
   postgres:
