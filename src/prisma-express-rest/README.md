@@ -3,7 +3,7 @@ then in the command line enter this commands:
 to create database:
 	docker compose up -d
 	docker compose ps
-then change directory to `prisma-pg`,
+
 to create prisma/prisma.schema tables (it will make init migrations):
 	npx prisma migrate dev --name "init"
 to generate tables of `prisma/schema.prisma` :
