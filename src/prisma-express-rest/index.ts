@@ -1,5 +1,4 @@
 import express from "express";
-import errorMiddleware from "../middleware/error.middleware";
 import { createPrismaConnection } from "./prisma/connection";
 import seedPrisma from './prisma/seed';
 import restRoutes from "./routes";
@@ -11,7 +10,7 @@ try {
   
   (async () => {
 	await createPrismaConnection();
-    process.argv.map(async (val, _index) => {
+    process.argv.map(async (val:string, _index:unknown) => {
       if (val ==="--seed") {
           await seedPrisma()
       }
@@ -19,12 +18,15 @@ try {
 
 	restRoutes(app);
     app.use(express.json());
-    app.use(errorMiddleware)
     
     app.listen(SERVER_PORT, () => {
       console.log(`Express server ( prisma + rest ) is up at http://localhost:${SERVER_PORT}`);
     });
   })();
 } catch (error) {
+  process.on('SIGINT', () => {
+  console.info("exit process ...")
+  process.exit(0)
+})
   console.log( "bootstrap error :" + error)
 }
