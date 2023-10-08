@@ -1,5 +1,6 @@
 FROM node:18 AS builder
-WORKDIR /app
+COPY ./dataset ./
+WORKDIR /src/app
 COPY package*.json ./
 COPY prisma ./prisma/
 RUN yarn 
