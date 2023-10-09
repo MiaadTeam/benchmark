@@ -1,7 +1,12 @@
-import City from '../../repository/city';
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 const getCityService = async (_id : number) => {
-	return await City.findOne(_id);	
+	return await prisma.city.findFirst({
+		where: {
+			id: _id
+		}
+	});	
 }
 
 export default getCityService

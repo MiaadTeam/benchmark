@@ -1,7 +1,8 @@
-import Province from "../../repository/province";
+import { PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 const deleteProvinceService = async (id: number) => {
-	return await Province.deleteOne(id);
+	return await prisma.province.delete({where:{id}});
 }
 
 export default deleteProvinceService
