@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { IProvinceDTO } from '../../../dto/location.dto';
-import updateProvinceService from '../../province/updateProvince.service';
+import { IProvinceDTO } from '../../dto/location.dto';
+import updateProvinceService from '../../services/province/updateProvince.service';
 
 const updateProvince = async (req: Request, res: Response) => {
     const id = req?.params?.id;

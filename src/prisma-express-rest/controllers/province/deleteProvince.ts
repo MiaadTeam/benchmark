@@ -1,6 +1,5 @@
-
 import { Request, Response } from 'express';
-import deleteProvinceService from '../../province/deleteProvince.service';
+import deleteProvinceService from '../../services/province/deleteProvince.service';
 
 const deleteProvince = async (req: Request, res: Response) => {
 	try {

@@ -1,5 +1,5 @@
-import { Request, Response } from 'express'
-import getOneProvinceService from '../../province/getOneProvince.service'
+import { Request, Response } from 'express';
+import getOneProvinceService from '../../services/province/getOneProvince.service';
 
 const getOneProvince = async (req: Request, res: Response) => {
 	try {
