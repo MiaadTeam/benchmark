@@ -32,6 +32,6 @@
 		"start": "ts-node-dev -r dotenv/config index.ts",
 		"start:prod": "node dist/main",
 		"build": "rimraf ./build && tsc",
-		"start:migrate": "prisma migrate deploy && yarn start:prod"
+		"start:migrate": "prisma migrate deploy && yarn start"
 	}
 }
