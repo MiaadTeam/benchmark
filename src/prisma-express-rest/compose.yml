@@ -1,41 +1,41 @@
-#first stop the docker and remove the containers:
-#docker stop $(docker ps -a -q)
-#docker rm $(docker ps -a -q)
-
-version: '3.8'
+version: '3'
 services:
   db:
-    image: postgres:14.1-alpine
+    image: postgres
     restart: always
+    environment:
+      PGUSER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - postgres:/var/lib/postgresql/data
-    env_file:
-      - .env
+      - db-data:/var/lib/postgresql/data
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: always
     ports:
-      - 5432:5432
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://db:5432"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    build:
-      context: ./
-      # additional_contexts:
-      #   dataPath: ../dataset
-      dockerfile: Dockerfile
-
-  server:
-    stdin_open: true
-    restart: on-failure
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: server
+      - '4466:4466'
     depends_on:
-      db:
-        condition: service_started
+      - db
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: postgres
+            host: db
+            user: postgres
+            password: postgres
+            rawAccess: true
+            port: 5432
+            migrations: true
+  app:
+    build: .
     ports:
-      - "3050:3000"
-
+      - '3000:3000'
+    # Use the script as the entrypoint and pass the host and port of the service to wait for
+    entrypoint: ["wait-for-it.sh", "prisma:4466", "--"]
+    # Use the original command of the app as an argument to the script
+    command: ["yarn", "start"]
+    depends_on:
+      - prisma
 volumes:
-  postgres:
+  db-data:
