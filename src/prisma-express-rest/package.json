@@ -29,7 +29,7 @@
 		"typescript": "^5.1.6"
 	},
 	"scripts": {
-		"start": "ts-node-dev -r dotenv/config index.ts",
+		"start": "NODE_OPTIONS='--max-old-space-size=10192' --debug ts-node-dev -r dotenv/config index.ts",
 		"start:prod": "node dist/main",
 		"build": "rimraf ./build && tsc",
 		"start:migrate": "prisma migrate deploy && yarn start"
