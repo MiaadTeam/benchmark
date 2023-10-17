@@ -1,7 +1,6 @@
 node_modules
 *.md
 !README.md
-*.lock
 *.log
 Dockerfile*
 docker-compose*

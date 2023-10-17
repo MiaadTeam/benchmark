@@ -1,43 +1,35 @@
 version: '3'
+
 services:
   db:
-    image: postgres
-    restart: always
+    container_name: db
+    image: postgres:13
     environment:
-      PGUSER: postgres
       POSTGRES_PASSWORD: postgres
-    volumes:
-      - db-data:/var/lib/postgresql/data
-  prisma:
-    # make a service to provice prisma available
-    image: prismagraphql/prisma:1.34
     restart: always
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    env_file:
+      - .env
     ports:
-      - '4466:4466'
-    depends_on:
-      - db
-    environment:
-      PRISMA_TELEMETRY_DISABLED: true,
-      PRISMA_CONFIG: |
-        port: 4466
-        databases:
-          default:
-            connector: postgres
-            host: db
-            user: postgres
-            password: postgres
-            rawAccess: true
-            port: 5432
-            migrations: true
+      - '5432:5432'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5432"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 2s
+
   app:
     build: .
+    depends_on:
+      - db
+        # condition: service_healthy
+    volumes:
+      - .:/app
     ports:
       - '3000:3000'
-    # Use the script as the entrypoint and pass the host and port of the service to wait for
-    entrypoint: ["wait-for-it.sh", "prisma:4466", "--"]
-    # Use the original command of the app as an argument to the script
-    command: ["yarn", "start"]
-    depends_on:
-      - prisma
+    command: ["yarn", "start:migrate"]
+
 volumes:
-  db-data:
+  postgres:
