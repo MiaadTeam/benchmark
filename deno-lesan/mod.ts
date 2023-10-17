@@ -1,56 +1,83 @@
 import {
   ActFn,
-  Document,
-  Filter,
+  boolean,
   lesan,
   MongoClient,
   number,
   object,
-  ObjectId,
   optional,
-  size,
   string,
-} from "https://deno.land/x/lesan@v0.0.79/mod.ts";
+} from "/Users/syd/work/arc/lesan/mod.ts";
 
 const coreApp = lesan();
 
 const client = await new MongoClient("mongodb://127.0.0.1:27017/").connect();
 
-const db = client.db("civil");
+const db = client.db("lesan-bench");
 
 coreApp.odm.setDb(db);
 
 // ================== MODEL SECTION ==================
 // ------------------ Country Model ------------------
-const countryPure = {
+const pure = {
   name: string(),
   population: number(),
-  abb: string(),
+  abb: optional(string()),
+  index: number(),
 };
 const countryRelations = {};
 const countries = coreApp.odm.newModel(
   "country",
-  countryPure,
+  pure,
   countryRelations,
 );
 
-// ------------------ User Model ------------------
-const userPure = {
-  name: string(),
-  age: number(),
-};
-
-const users = coreApp.odm.newModel("user", userPure, {
+// ------------------ State Model ------------------
+const provinces = coreApp.odm.newModel("province", pure, {
   country: {
     optional: false,
     schemaName: "country",
     type: "single",
     relatedRelations: {
-      users: {
+      provinces: {
         type: "multiple",
         limit: 50,
         sort: {
-          field: "_id",
+          field: "population",
+          order: "desc",
+        },
+      },
+    },
+  },
+});
+
+// ------------------ City Model ------------------
+const cities = coreApp.odm.newModel("city", pure, {
+  country: {
+    optional: false,
+    schemaName: "country",
+    type: "single",
+    relatedRelations: {
+      cities: {
+        type: "multiple",
+        limit: 50,
+        sort: {
+          field: "population",
+          order: "desc",
+        },
+      },
+    },
+  },
+  province: {
+    optional: false,
+    schemaName: "province",
+    type: "single",
+    relatedRelations: {
+      cities: {
+        type: "multiple",
+        limit: 50,
+        sort: {
+          field: "population",
           order: "desc",
         },
       },
@@ -61,57 +88,109 @@ const users = coreApp.odm.newModel("user", userPure, {
 // ================== FUNCTIONS SECTION ==================
 // ------------------ Country Founctions ------------------
 // ------------------ Add Country ------------------
-const addCountryValidator = () => {
+const seedValidator = () => {
   return object({
-    set: object(countryPure),
-    get: coreApp.schemas.selectStruct("country", { users: 1 }),
-  });
-};
-
-const addCountry: ActFn = async (body) => {
-  const { name, population, abb } = body.details.set;
-  return await countries.insertOne({
-    doc: {
-      name,
-      population,
-      abb,
-    },
-    projection: body.details.get,
-  });
-};
-
-coreApp.acts.setAct({
-  schema: "country",
-  actName: "addCountry",
-  validator: addCountryValidator(),
-  fn: addCountry,
-});
-
-// ------------------ Get Countries  ------------------
-const getCountriesValidator = () => {
-  return object({
-    set: object({
-      page: number(),
-      limit: number(),
-    }),
+    set: object({ city: optional(boolean()), province: optional(boolean()) }),
     get: coreApp.schemas.selectStruct("country", 1),
   });
 };
 
+const seed: ActFn = async (body) => {
+  const { city, province } = body.details.set;
+  const data = JSON.parse(
+    await Deno.readTextFile("../src/dataset/dataparsed.json"),
+  ) as any[];
+
+  const insertedCountry = await countries.insertMany({
+    docs: data.map((cn, index) => ({
+      name: cn.name,
+      population: cn.population,
+      abb: cn.abb,
+      index,
+    })) as any,
+  });
+
+  for await (const index of insertedCountry.keys()) {
+    if (data[index].provinces.length > 0) {
+      const insertedProvinces = await provinces.insertMany({
+        docs: data[index].provinces.map((st: any, index: number) => ({
+          name: st.name,
+          population: st.population,
+          abb: st.abb,
+          index,
+        })),
+        relations: {
+          country: {
+            _ids: insertedCountry[index]._id,
+            relatedRelations: { provinces: true },
+          },
+        },
+      });
+      for await (const provinceIdx of data[index].provinces.keys()) {
+        if (data[index].provinces[provinceIdx].cities.length > 0) {
+          await cities.insertMany({
+            docs: data[index].provinces[provinceIdx].cities.map((
+              st: any,
+              index: number,
+            ) => ({
+              name: st.name,
+              population: st.population,
+              abb: st.abb,
+              index,
+            })),
+            relations: {
+              country: {
+                _ids: insertedCountry[index]._id,
+                relatedRelations: { cities: true },
+              },
+              province: {
+                _ids: insertedProvinces.find((p) =>
+                  p.index === provinceIdx
+                )!._id,
+                relatedRelations: { cities: true },
+              },
+            },
+          });
+        }
+      }
+    }
+  }
+
+  return "nice";
+};
+
+coreApp.acts.setAct({
+  schema: "country",
+  actName: "seed",
+  validator: seedValidator(),
+  fn: seed,
+});
+
+// ------------------ Get Countries ------------------
+const getCountriesValidator = () => {
+  return object({
+    set: object({
+      page: number(),
+      take: number(),
+    }),
+    get: coreApp.schemas.selectStruct("country", 2),
+  });
+};
 const getCountries: ActFn = async (body) => {
-  let {
-    set: { page, limit },
+  const {
+    set: { page, take },
     get,
   } = body.details;
+  const pipeline = [];
 
-  page = page || 1;
-  limit = limit || 50;
-  const skip = limit * (page - 1);
+  pipeline.push({ $skip: (page - 1) * take });
+  pipeline.push({ $limit: take });
 
   return await countries
-    .find({ projection: get, filters: {} })
-    .skip(skip)
-    .limit(limit)
+    .aggregation({
+      pipeline,
+      projection: get,
+    })
     .toArray();
 };
 
@@ -121,82 +200,5 @@ coreApp.acts.setAct({
   validator: getCountriesValidator(),
   fn: getCountries,
 });
-
-// ------------------ User Founctions ------------------
-// --------------------- Add User ----------------------
-const addUserValidator = () => {
-  return object({
-    set: object({
-      ...userPure,
-      country: string(),
-    }),
-    get: coreApp.schemas.selectStruct("user", 1),
-  });
-};
-const addUser: ActFn = async (body) => {
-  const { country, name, age } = body.details.set;
-
-  return await users.insertOne({
-    doc: { name, age },
-    projection: body.details.get,
-    relations: {
-      country: {
-        _ids: new ObjectId(country),
-        relatedRelations: {
-          users: true,
-        },
-      },
-    },
-  });
-};
-
-coreApp.acts.setAct({
-  schema: "user",
-  actName: "addUser",
-  validator: addUserValidator(),
-  fn: addUser,
-});
-
-// --------------------- Get Users ----------------------
-const getUsersValidator = () => {
-  return object({
-    set: object({
-      page: number(),
-      take: number(),
-      countryId: optional(size(string(), 24)),
-    }),
-    get: coreApp.schemas.selectStruct("user", { country: 1 }),
-  });
-};
-const getUsers: ActFn = async (body) => {
-  let {
-    set: {
-      page,
-      limit,
-      countryId,
-    },
-    get,
-  } = body.details;
-
-  page = page || 1;
-  limit = limit || 50;
-  const skip = limit * (page - 1);
-  const filters: Filter<Document> = {};
-  countryId && (filters["country._id"] = new ObjectId(countryId));
-
-  return await users
-    .find({ projection: get, filters })
-    .skip(skip)
-    .limit(limit)
-    .toArray();
-};
-
-coreApp.acts.setAct({
-  schema: "user",
-  actName: "getUsers",
-  validator: getUsersValidator(),
-  fn: getUsers,
-});
-
-// ================== RUM SECTION ==================
-coreApp.runServer({ port: 8080, typeGeneration: false, playground: true });
+// ------------------ Get Countries  ------------------
+coreApp.runServer({ port: 1366, typeGeneration: false, playground: true });
