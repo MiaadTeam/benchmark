@@ -18,7 +18,7 @@ other directories are named in <server-database-orm> format, e.g:`express-prisma
 
 We explain how to start with each one
 
-**express-prisma:**
+**prisma-express-rest:**
 1.We have provided a docker file for the database creation,
   so in the project root we compose it:
    `cd ./src/express-prisma/prisma`
@@ -41,10 +41,9 @@ We explain how to start with each one
   or
    `curl http://localhost:9900/prisma/country/fiftyCitiesOfFiftyProvinces`
 as the result we can will see such a result:
+![prisma-express-rest](./deno-lesan/http/hurl.png "prisma-express-rest ( postgresql )")
 
-![alt text](Isolated.png "Title")
-
-**express-mongoose:**
+**mongoose-express-rest:**
 1.You should install MongoDB in your machine first. The installation instructions can be found at [Official MongoDB installation](https://www.mongodb.com/docs/manual/installation/) manual.
 2.In general, to start a server we use this format: `yarn server --orm < --seed >`
   the seed argument tells the server to enter the data of dataset(countries, provinces and cities) into our database.
