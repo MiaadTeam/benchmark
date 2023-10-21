@@ -1,6 +1,6 @@
 import { readFile } from "fs/promises";
 import path from "path";
-import { SeedCountry, SeedState } from '../../dataset/dataset.type';
+import { SeedCity, SeedCountry, SeedProvince } from '../../dataset/dataparsed.type';
 import { ICountryDTO } from "../dto/location.dto";
 import createCityService from '../services/city/createCity.service';
 import createCountryService from '../services/country/createCountry.service';
@@ -16,7 +16,7 @@ const seedPrisma = async() => {
 	
 const readDataSet = async () => {
 	const raw: any = await readFile(
-		path.join(__dirname, "../../dataset/dataset.json"),
+		path.join(__dirname, "../../dataset/dataparsed.json"),
 		'utf-8'
 	)
 	return JSON.parse(raw)
@@ -34,8 +34,8 @@ const insertAllCountries = async ( seedCountries: SeedCountry[] ) => {
 const insertCountry = async (seedCountry:SeedCountry) => {
 	const country:ICountryDTO = {
 		name: seedCountry.name,
-		abb: makeAbb(seedCountry.name),
-		population: generateRandom(100000, 99999999),
+		abb: seedCountry.abb,
+		population: seedCountry.population,
 	}
 	console.log(country.name)	
 	
@@ -44,26 +44,26 @@ const insertCountry = async (seedCountry:SeedCountry) => {
 
 const insertAllProvinces = async (country: SeedCountry, countryId:number) => {
 	const provinces:number[] = []
-	for await (const seedState of country.states) {
-		const province =  await insertProvince(seedState, countryId) 
+	for await (const seedProvince of country.provinces) {
+		const province =  await insertProvince(seedProvince, countryId) 
 		const provinceId = Number(province?.id)
-		await insertAllCities(seedState,provinceId)	
+		await insertAllCities(seedProvince,provinceId)	
 		provinces.push(provinceId)
 	}
 	return provinces
 }
 
-const insertProvince = async (seedState:SeedState,  countryId:number) => {
+const insertProvince = async (seedProvince:SeedProvince,  countryId:number) => {
 	const province = {
-		name: seedState.name,
-		abb: makeAbb(seedState.name),
-		population: generateRandom(10000, 9999999),
+		name: seedProvince.name,
+		abb:seedProvince.abb,
+		population: seedProvince.population,
 		countryId,
 	}
 	return await createProvinceService(province)
 }
 
-const insertAllCities = async (state: SeedState, provinceId:number): Promise<Array<number>> => {
+const insertAllCities = async (state: SeedProvince, provinceId:number): Promise<Array<number>> => {
 	const insertedCities : any[] = []
 	for await (const seedCity of state.cities) {
 		const cityId = await insertCity(seedCity, provinceId)
@@ -72,23 +72,14 @@ const insertAllCities = async (state: SeedState, provinceId:number): Promise<Arr
 	return insertedCities
 }
 
-const insertCity = async (seedCity:any,  provinceId:number) => {
+const insertCity = async (seedCity:SeedCity,  provinceId:number) => {
 	const city = await createCityService({
 		name: seedCity.name,
-		abb: makeAbb(seedCity.name),
-		population: generateRandom(10000, 9999999),
+		abb: seedCity.abb,
+		population: seedCity.population,
 		provinceId,
 		})
 	return  city.id
 }
-
-const generateRandom = (min = 0, max = 100)=> {
-    const difference = max - min;
-    const floor = Math.floor( Math.random() * difference);
-    return floor + min;
-}
-
-const makeAbb = (name:string) => name.slice(0,3)
-
 
 export default seedPrisma

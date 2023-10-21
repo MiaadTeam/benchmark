@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import mongoose from "mongoose";
 import path from "path";
-import { SeedCity, SeedCountry, SeedState } from '../dataset/dataset.type';
+import { SeedCity, SeedCountry, SeedProvince } from '../dataset/dataparsed.type';
 import { ICityDTO } from "./models/City";
 import { ICountryDTO } from "./models/Country";
 import { IProvinceDTO } from "./models/Province";
@@ -50,7 +50,7 @@ const insertCountry = async (seedCountry:SeedCountry) => {
 
 const insertAllProvinces = async (country: SeedCountry, countryId:mongoose.Types.ObjectId) => {
 	const provinces: mongoose.Types.ObjectId[] = []
-	for await (const seedState of country.states) {
+	for await (const seedState of country.provinces) {
 		const province =  await insertProvince(seedState, countryId) 
 		const provinceId = makeObjectId(province._id)
 		const cities:mongoose.Types.ObjectId[] = await insertAllCities(seedState,provinceId)	
@@ -60,7 +60,7 @@ const insertAllProvinces = async (country: SeedCountry, countryId:mongoose.Types
 	return provinces
 }
 
-const insertProvince = async (seedState:SeedState,  countryId: mongoose.Types.ObjectId) => {
+const insertProvince = async (seedState:SeedProvince,  countryId: mongoose.Types.ObjectId) => {
 	const province:IProvinceDTO = {
 		name: seedState.name,
 		abb: makeAbb(seedState.name),
@@ -71,7 +71,7 @@ const insertProvince = async (seedState:SeedState,  countryId: mongoose.Types.Ob
 	return await createProvinceService(province)
 }
 
-const insertAllCities = async (state: SeedState, provinceId: mongoose.Types.ObjectId): Promise<Array<mongoose.Types.ObjectId>> => {
+const insertAllCities = async (state: SeedProvince, provinceId: mongoose.Types.ObjectId): Promise<Array<mongoose.Types.ObjectId>> => {
 	const cityInputs = state.cities.map( seedCity => makeCityDTO(seedCity, provinceId))
 	const insertedCities = await createBulkCityService(cityInputs)
 	return insertedCities.map(city => makeObjectId(city._id))

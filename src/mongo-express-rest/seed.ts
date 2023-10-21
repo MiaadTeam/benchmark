@@ -1,7 +1,7 @@
 import { readFile } from "fs/promises";
 import { Document, InsertOneResult, ObjectId } from "mongodb";
 import path from "path";
-import { SeedCity, SeedCountry, SeedState } from '../dataset/dataset.type';
+import { SeedCity, SeedCountry, SeedProvince } from '../dataset/dataparsed.type';
 import City from "./models/City";
 import Country from "./models/Country";
 import Province from "./models/Province";
@@ -57,7 +57,7 @@ const updateCountryWithProvinceIds = async (countryId: ObjectId, provinces: Set<
 
 const insertAllProvinces = async (country: SeedCountry, countryId:ObjectId) => {
 	const provinces:Set<InsertOneResult<Document>> = new Set()
-	for await (const seedState of country.states) {
+	for await (const seedState of country.provinces) {
 		const province =  await insertProvince(seedState, countryId) 
 		const cities = await insertAllCities(seedState,province.insertedId)	
 		await updateProvinceWithCities(province.insertedId, cities)
@@ -66,7 +66,7 @@ const insertAllProvinces = async (country: SeedCountry, countryId:ObjectId) => {
 	return provinces
 }
 
-const insertProvince = async (seedState:SeedState, countryId: ObjectId) => {
+const insertProvince = async (seedState:SeedProvince, countryId: ObjectId) => {
 	const province:Province = {
 		name: seedState.name,
 		abb: seedState.name.slice(3),
@@ -86,7 +86,7 @@ const updateProvinceWithCities = async (provinceId: ObjectId, cities: Set<Insert
 	await updateProvinceService( provinceId, {cityIds} )
 }
 
-const insertAllCities = async (state: SeedState, provinceId: ObjectId): Promise<Set<InsertOneResult<Document>>> => {
+const insertAllCities = async (state: SeedProvince, provinceId: ObjectId): Promise<Set<InsertOneResult<Document>>> => {
 	const cities: Set<InsertOneResult<Document>> = new Set() 
 	for await (const seedCity of state.cities) {
 		const city = await insertCity(seedCity, provinceId)
