@@ -1,4 +1,4 @@
-<!-- to see results online: https://mermaid.live/ -->
+%% to see results online: https://mermaid.live/
 gantt
    	title results of lesan-deno-rest
     dateFormat X
