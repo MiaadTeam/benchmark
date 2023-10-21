@@ -1,6 +1,6 @@
 %% to see results online: https://mermaid.live/
 gantt
-   	title results of mongoose-express-rest, not sorted by population. Asus GL552V, 16G of memory, corei7 ( in milliseconds ) 
+   	title results of mongoose-express-rest, not sorted by population. Asus GL552V, 16G of memory, corei7, OS: Xubuntu 20.04 ( in milliseconds ) 
     dateFormat X
     axisFormat %s
     section test 1
