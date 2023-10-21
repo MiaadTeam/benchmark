@@ -1,6 +1,6 @@
 %% to see results online: https://mermaid.live/
 gantt
-   	title results of lesan-deno-rest
+   	title results of lesan-deno-rest, system: Asus GL552V, 16G of memory, corei7 (in milliseconds)
     dateFormat X
     axisFormat %s
     section test 1
@@ -8,7 +8,7 @@ gantt
     section test 2
     139   : 0, 139
     section test 3
-    130   : 0, 130
+    130 (best)  : 0, 130
     section test 4
     153   : 0, 153
     section test 5

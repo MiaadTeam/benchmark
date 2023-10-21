@@ -1,6 +1,6 @@
 %% to see results online: https://mermaid.live/
 gantt
-   	title results of mongoose-express-rest ( sorted by population), in milliseconds
+   	title results of mongoose-express-rest, sorted by population), in milliseconds
     dateFormat X
     axisFormat %s
     section test 1
