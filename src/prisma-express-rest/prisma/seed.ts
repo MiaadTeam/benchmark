@@ -63,9 +63,9 @@ const insertProvince = async (seedProvince:SeedProvince,  countryId:number) => {
 	return await createProvinceService(province)
 }
 
-const insertAllCities = async (state: SeedProvince, provinceId:number): Promise<Array<number>> => {
+const insertAllCities = async (province: SeedProvince, provinceId:number): Promise<Array<number>> => {
 	const insertedCities : any[] = []
-	for await (const seedCity of state.cities) {
+	for await (const seedCity of province.cities) {
 		const cityId = await insertCity(seedCity, provinceId)
 		insertedCities.push(cityId)
 	}
