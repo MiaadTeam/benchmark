@@ -3,35 +3,57 @@ import { collections } from "../..";
 const getFiftyCitiesOfCountryService = async () => {
 	return collections.countries?.aggregate(
 		[
+			{ $skip: 0 },
+			{ $limit: 2 },
 			{
 				$lookup: {
-				from: "provinces",
-				localField: "_id",
-				foreignField: "countryId",
-				as: "provinces"
+					from: "provinces",
+					// localField: "provinces",
+					// foreignField: "_id",
+					let: { "provincesIds": "$provinces" },
+					pipeline: [
+						{
+							$match: {
+								$expr: { $in: ["$_id", "$$provincesIds"] }
+							}
+						},
+						{
+							$lookup: {
+								from: "cities",
+								let: { "cityIds": "$cities" },
+								pipeline: [
+									{
+										$match: {
+											$expr: { $in: ["$_id", "$$cityIds"] }
+										}
+									}
+								],
+								as: "cities"
+							},
+						}
+					],
+					as: "provinces"
 				}
-			}, {
-				$lookup: {
-					from: "",
-					localField: "address._id",
-					foreignField: "address_id",
-					as: "address.addressComment",
-				}
-			}, {
-				$group: {
-					_id : "$_id",
-					name: { $first: "$name" },
-					address: { $push: "$address" }
-				}
-			}, {
-				$project: {
-					_id: 1,
-					name: 1,
-					address: {
-						$filter: { input: "$address", as: "a", cond: { $ifNull: ["$$a._id", false] } }
-					}
-				}
-			}
+			},
+			// {
+			// 	$lookup: {
+			// 		from: "cities",
+			// 		localField: "provinces.cities",
+			// 		foreignField: "_id",
+			// 		as: "anotherCities"
+			// 	}
+			// },
+			// {
+			// 	$project: {
+			// 		_id: 1,
+			// 		name: 1,
+			// 		provinces: {
+			// 			_id: 1,
+			// 			name: 1,
+			// 			cities: 1
+			// 		}
+			// 	}
+			// }
 		]
 	).toArray()
 }
