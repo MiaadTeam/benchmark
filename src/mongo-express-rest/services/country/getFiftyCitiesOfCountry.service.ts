@@ -9,11 +9,6 @@ const getFiftyCitiesOfCountryService = async () => {
 				localField: "_id",
 				foreignField: "countryId",
 				as: "provinces"
-			}
-			}, {
-				$unwind: {
-					path: "$provinces",
-					preserveNullAndEmptyArrays: true
 				}
 			}, {
 				$lookup: {
