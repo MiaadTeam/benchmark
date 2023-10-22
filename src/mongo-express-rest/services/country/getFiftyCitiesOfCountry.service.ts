@@ -4,7 +4,7 @@ const getFiftyCitiesOfCountryService = async () => {
 	return collections.countries?.aggregate(
 		[
 			{ $skip: 0 },
-			{ $limit: 2 },
+			{ $limit: 50 },
 			{
 				$lookup: {
 					from: "provinces",
