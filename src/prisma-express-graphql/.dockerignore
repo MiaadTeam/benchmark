@@ -1,0 +1,11 @@
+*.md
+!README.md
+*.lock
+*.log
+Dockerfile*
+docker-compose*
+.dockerignore
+.git
+.gitignore
+LICENSE
+.vscode

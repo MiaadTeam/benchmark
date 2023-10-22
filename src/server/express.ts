@@ -3,14 +3,14 @@ import { graphqlHTTP } from "express-graphql";
 import "reflect-metadata";
 import { schema } from "../api/graphql/root";
 import restRoutes from "../api/rest";
-import { connectToMongoDB } from "../express-mongo";
-import seedMongoDB from "../express-mongo/seed";
-import { connectToMongoose } from "../express-mongoose";
-import seedMongoose from "../express-mongoose/seed";
-import { createPrismaConnection } from "../express-prisma";
-import seedPrisma from '../express-prisma/seed';
-import { createTypeormConnection } from "../express-typeorm";
 import errorMiddleware from "../middleware/error.middleware";
+import { connectToMongoDB } from "../mongo-express-rest";
+import seedMongoDB from "../mongo-express-rest/seed";
+import { connectToMongoose } from "../mongoose-express-rest";
+import seedMongoose from "../mongoose-express-rest/seed";
+import { createPrismaConnection } from "../prisma-express-rest";
+import seedPrisma from '../prisma-express-rest/seed';
+import { createTypeormConnection } from "../typeorm-express-rest";
 let ENDPOINT = "" // default for RestApi mode
 
 try {

@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_USER=prisma_pg
+      - POSTGRES_PASSWORD=benchmark
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    ports:
+      - '5444:5432'
+volumes:
+  postgres:

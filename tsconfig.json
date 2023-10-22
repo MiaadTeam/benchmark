@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "lib": ["dom", "es6", "es2019", "esnext.asynciterable"],
+      "sourceMap": true,
+      "moduleResolution": "node",
+      "declaration": false,
+      "composite": false,
+      "removeComments": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "skipLibCheck": true,
+      "target": "ES2019",
+      "importHelpers": true,
+      "stripInternal": true,
+      "pretty": true,
+      "downlevelIteration": true,
+      
+      "rootDir": "./",
+      "types": []
+  },
+  "exclude": [
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts",
+  ]
+}

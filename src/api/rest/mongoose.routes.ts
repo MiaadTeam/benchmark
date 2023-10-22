@@ -1,10 +1,10 @@
 import { Router } from "express"
-import createCountry from "../../express-mongoose/controllers/country/createCountry"
-import deleteCountry from "../../express-mongoose/controllers/country/deleteCountry"
-import getFiftyCitiesSorted from "../../express-mongoose/controllers/country/getFiftyCitieSorted"
-import getFiftyCitiesOfCountryNoSort from '../../express-mongoose/controllers/country/getFiftyCitiesNoSort'
-import getOneCountry from "../../express-mongoose/controllers/country/getOneCountry"
-import updateCountry from "../../express-mongoose/controllers/country/updateCountry"
+import createCountry from "../../mongoose-express-rest/controllers/country/createCountry"
+import deleteCountry from "../../mongoose-express-rest/controllers/country/deleteCountry"
+import getFiftyCitiesSorted from "../../mongoose-express-rest/controllers/country/getFiftyCitieSorted"
+import getFiftyCitiesOfCountryNoSort from '../../mongoose-express-rest/controllers/country/getFiftyCitiesNoSort'
+import getOneCountry from "../../mongoose-express-rest/controllers/country/getOneCountry"
+import updateCountry from "../../mongoose-express-rest/controllers/country/updateCountry"
 const router = Router()
 
 router.get( "/fiftyCitiesOfFiftyProvincesNoSort", getFiftyCitiesOfCountryNoSort )
