@@ -22,7 +22,7 @@ const seedMongoDB = async() => {
 	
 const readDataSet = async () => {
 	const raw: any = await readFile(
-		path.join(__dirname, "../../dataset.json"),
+		path.join(__dirname, "../dataset/dataparsed.json"),
 		'utf-8'
 	)
 	return JSON.parse(raw)
@@ -39,8 +39,8 @@ const insertAllCountries = async ( seedCountries: SeedCountry[] ) => {
 const insertCountry = async (seedCountry:SeedCountry) => {
 	const country:Country = {
 		name: seedCountry.name,
-		abb: seedCountry.iso2,
-		population: generateRandom(100000, 99999999),
+		abb: seedCountry.abb,
+		population: seedCountry.population,
 		provinceIds: []
 	}
 
@@ -66,11 +66,11 @@ const insertAllProvinces = async (country: SeedCountry, countryId:ObjectId) => {
 	return provinces
 }
 
-const insertProvince = async (seedState:SeedProvince, countryId: ObjectId) => {
+const insertProvince = async (seedProvince:SeedProvince, countryId: ObjectId) => {
 	const province:Province = {
-		name: seedState.name,
-		abb: seedState.name.slice(3),
-		population: generateRandom(10000, 9999999),
+		name: seedProvince.name,
+		abb: seedProvince.abb,
+		population: seedProvince.population,
 		countryId,
 		cityIds: []
 	}
@@ -98,17 +98,11 @@ const insertAllCities = async (state: SeedProvince, provinceId: ObjectId): Promi
 const insertCity = async (seedCity:SeedCity, provinceId: ObjectId) => {
 	const city:City = {
 		name: seedCity.name,
-		abb: seedCity.name.slice(3),
-		population: generateRandom(1000, 99999),
+		abb: seedCity.abb,
+		population: seedCity.population,
 		provinceId
 	}
 	return await createCityService(city)
-}
-
-function generateRandom(min = 0, max = 100) {
-    const difference = max - min;
-    const floor = Math.floor( Math.random() * difference);
-    return floor + min;
 }
 
 export default seedMongoDB
