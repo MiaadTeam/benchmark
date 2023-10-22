@@ -1,5 +1,7 @@
-POST http://localhost:9900/graphql
+# run me in root of src/prisma-express-graphql:
+# hurl --variables-file .env http/getFiftyCitiesOfCountry.hurl --test
 
+POST http://localhost:{{SERVER_PORT}}/graphql
 ```graphql
 {
   getFiftyCitiesOfCountry( pageNumber:1, limit:50){
@@ -15,5 +17,3 @@ POST http://localhost:9900/graphql
 	}
   }
 }
-  
-```
