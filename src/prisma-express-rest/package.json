@@ -35,9 +35,5 @@
 		"start:migrate": "prisma migrate deploy && yarn start",
    		"dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     	"studio": "prisma studio"
-	},
-
-	"prisma":{
-		"seed": "ts-node --transpile-only prisma/seed.ts"
 	}
 }
