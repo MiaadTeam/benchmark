@@ -41,18 +41,18 @@ const insertCountry = async (seedCountry:SeedCountry) => {
 		name: seedCountry.name,
 		abb: seedCountry.abb,
 		population: seedCountry.population,
-		provinceIds: []
+		provinces: []
 	}
 
 	return await createCountryService(country)
 }	
 
-const updateCountryWithProvinceIds = async (countryId: ObjectId, provinces: Set<InsertOneResult<Document>>) => {
-	const provinceIds: ObjectId[] = []
-	for (const province of provinces) {
-		provinceIds.push(province.insertedId)
+const updateCountryWithProvinceIds = async (countryId: ObjectId, seedProvince: Set<InsertOneResult<Document>>) => {
+	const provinces: ObjectId[] = []
+	for (const province of seedProvince) {
+		provinces.push(province.insertedId)
 	}	
-	await updateCountryService(countryId, {provinceIds})
+	await updateCountryService(countryId, {provinces})
 }
 
 const insertAllProvinces = async (country: SeedCountry, countryId:ObjectId) => {
@@ -72,18 +72,18 @@ const insertProvince = async (seedProvince:SeedProvince, countryId: ObjectId) =>
 		abb: seedProvince.abb,
 		population: seedProvince.population,
 		countryId,
-		cityIds: []
+		cities: []
 	}
 	return await createProvinceService(province)
 }
 
-const updateProvinceWithCities = async (provinceId: ObjectId, cities: Set<InsertOneResult<Document>>) => {
-	const cityIds: ObjectId[] = []
-	for (const city of cities) {
-		cityIds.push(city.insertedId)
+const updateProvinceWithCities = async (provinceId: ObjectId, seedCities: Set<InsertOneResult<Document>>) => {
+	const cities: ObjectId[] = []
+	for (const city of seedCities) {
+		cities.push(city.insertedId)
 	}
 
-	await updateProvinceService( provinceId, {cityIds} )
+	await updateProvinceService( provinceId, {cities} )
 }
 
 const insertAllCities = async (state: SeedProvince, provinceId: ObjectId): Promise<Set<InsertOneResult<Document>>> => {

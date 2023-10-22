@@ -5,7 +5,7 @@ export default class  {
 		public name: string,
 		public abb: string,
 		public population: number,
-		public provinceIds?: ObjectId[],
+		public provinces?: ObjectId[],
  		public id?: ObjectId
 	) { }
 }
