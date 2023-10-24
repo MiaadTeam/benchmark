@@ -66,7 +66,7 @@ We explain how to start with each one:
 7. As we are root of src/prisma-express-rest, to fetch our query:
    `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`
 So we can see the similar results :
-![prisma-express-rest](.test-results/prisma-express-rest/http/results.png "prisma-express-rest ( PostgreSQL )")
+![prisma-express-rest](.test-results/prisma-express-rest/results.png "prisma-express-rest ( PostgreSQL )")
 
 *mongoose-express-rest:*
 1. You should install MongoDB on your machine first. The installation instructions can be found at [Official MongoDB installation](https://www.mongodb.com/docs/manual/installation/) manual.
@@ -79,4 +79,4 @@ the seed argument tells the server to enter the data of the dataset(countries, p
 4.  As we are root of src/mongoose-express-rest, to fetch our query:
       `hurl --variables-file .env ./http/getFiftyCitiesOfCountryNoSrot.hurl --test`
 
-![mongoose-express-rest](.test-results/mongoose-express-rest/http/results.png "mongoose-express-rest ( No sort )")
+![mongoose-express-rest](.test-results/mongoose-express-rest/results.png "mongoose-express-rest ( No sort )")
