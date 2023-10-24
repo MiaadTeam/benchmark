@@ -12,4 +12,6 @@ gantt
     section forth
     mongoose-express-rest (not sorted), 5896 ms    : 0, 5896
     section fifth
+    mongo-express-rest (not sorted), 94106 ms    : 0, 94106
+    section sixth
     mongoose-express-rest (sort by a numeric population field), 388793 ms   : 0, 388793
