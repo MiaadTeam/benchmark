@@ -1,17 +1,18 @@
-**Purpose**  
+# Purpose
 [Lesan](https://github.com/MiaadTeam/lesan) is a framework that excels at the performance of reading data from embedded data with ease of writing and updating the embedded data.
 Embedding sorted data (using MongoDB) has significant improvement on performance of data read and the main art of lesan is to provide ease of update for these sorted embedded data. But is it worth solving challenges like updating huge embedded data? 
 The current benchmark is going to illustrate how [Lesan](https://github.com/MiaadTeam/lesan) differs with various combinations of ORM and APIs.
 We will seed each database with the same dataset ( downloaded from kaggle.com ) and then query for 50 cities of 50 provinces in available countries.
 
-**Tools**
+# Tools
 For our comparison we have used the hardware and software below:
 System: Asus GL552V, 16G of memory, core i7
 OS: Xubuntu 20.04
 WezTerm: a powerful cross-platform terminal emulator and multiplexer implemented in Rust.
 Hurl: a command line tool that runs HTTP requests defined in a simple plain text format. We used it to test HTTP responses. When Hurl is used via the `--test` option, it does not consume any time to process the response object. So that is why we chose Hurl over most known tools like Postman, to have more precise results.
 
-**Results**
+# Results
+### Best
 In each case, we tested every `orm-server-api` combination 10 times and marked the best result on their chart. We have compared the best results of each one to know how they differ with [Lesan](https://github.com/MiaadTeam/lesan) and then illustrated the records of each combination:  
 
 ![Comparison of best results of lesan VS other ORMs](https://mermaid.ink/svg/pako:eNqFU8tq3DAU_ZWLIJCA4_FTtrwrtM2m0EVKCcEbjS2PRfVwLTnMdJh_71WcR2co7cb4HOmce3R1dSSd7QVpyNUVeAtOCJiFW5R3YI2SRjQwej-5ZrPRYtZc9rGST2LTmh033rcGAFrvpVcCvo0CtsL5d4cBselGzecfwQ887nBc4-fgvNANfHCLg7svZZl9jyCld0GihbbzIYLOzkJWEXy9b-Bh2S7GL5AlcVLANUgDWiolneis6R3cYIoQBXruxWeLQT08rAzfS_fCXLmVQpWXGGeQs1uPAEo4bm57YewtpvcYJk9AO1xpIHlG59K18MpNs3Sa34r9hFL3qqcFCwarHMG53o9y_rt8N_Np_KlQxKr83QHBRXg7-3GltDU7a504iwDXxnpwuEv0NxGUNaPrgVbDgC-7MZwZ_suNFWlyZvdMXLRI7v8TMNjB9gAczILTJTuY7LQo_hJHqFAqr-uK5X_cxUqQiLwMJA7vMZRpCY6XFi1p8LcXA8cZbElrTriVL97eH0xHGj8vIiLLFAblo-TYbU2agSv3xn7qpbfzG6ks7wXCI_GHKbyUnXQeLfH-B7kL_DIrpF-fSViOd9KPyzburN442Y8cr-qJ0Q3NaM2zXNAq52We9902ZfWQFenQV0macXI6RWTi5tFa_RoVYSiyJ00WVwUtWZJWSYlqWkfkQJo0z-I8TRhjZZGUVZ1l6PHr2SCNi5wWaZ2xgiWUpjQ7_QbqCjyw
@@ -30,10 +31,10 @@ In each case, we tested every `orm-server-api` combination 10 times and marked t
 Note: the services and database are the same for `prisma-express-rest` and `prisma-express-graphql`. The difference is because of the overhead of parsing for `gql`. Graphql used this method to provide to add a schema-defining API to other libraries, but [Lesan](https://github.com/MiaadTeam/lesan) provides a schema-defining API to other libraries plus type-safety with no overhead and also a more powerful playground!
 
 
-**Prerequisites**
+### Prerequisites
 We assume that you have a basic understanding of back-end development with JavaScript and also SQL and NoSQL databases.
 
-**Usage**
+### Usage
 In the root of project, *test results* directory contains the `getFiftyCitiesOfCoutnry.hurl` file to easily query for our benchmark and also the results of each test on the same system. You can do these benchmarks on your own system.
 
 basic setting:
