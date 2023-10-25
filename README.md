@@ -17,15 +17,15 @@ In each case, we tested every `orm-server-api` combination 10 times and marked t
 ![Comparison of best results of lesan VS other ORMs](https://mermaid.ink/svg/pako:eNqFU8tq3DAU_ZWLIJCA4_FTtrwrtM2m0EVKCcEbjS2PRfVwLTnMdJh_71WcR2co7cb4HOmce3R1dSSd7QVpyNUVeAtOCJiFW5R3YI2SRjQwej-5ZrPRYtZc9rGST2LTmh033rcGAFrvpVcCvo0CtsL5d4cBselGzecfwQ887nBc4-fgvNANfHCLg7svZZl9jyCld0GihbbzIYLOzkJWEXy9b-Bh2S7GL5AlcVLANUgDWiolneis6R3cYIoQBXruxWeLQT08rAzfS_fCXLmVQpWXGGeQs1uPAEo4bm57YewtpvcYJk9AO1xpIHlG59K18MpNs3Sa34r9hFL3qqcFCwarHMG53o9y_rt8N_Np_KlQxKr83QHBRXg7-3GltDU7a504iwDXxnpwuEv0NxGUNaPrgVbDgC-7MZwZ_suNFWlyZvdMXLRI7v8TMNjB9gAczILTJTuY7LQo_hJHqFAqr-uK5X_cxUqQiLwMJA7vMZRpCY6XFi1p8LcXA8cZbElrTriVL97eH0xHGj8vIiLLFAblo-TYbU2agSv3xn7qpbfzG6ks7wXCI_GHKbyUnXQeLfH-B7kL_DIrpF-fSViOd9KPyzburN442Y8cr-qJ0Q3NaM2zXNAq52We9902ZfWQFenQV0macXI6RWTi5tFa_RoVYSiyJ00WVwUtWZJWSYlqWkfkQJo0z-I8TRhjZZGUVZ1l6PHr2SCNi5wWaZ2xgiWUpjQ7_QbqCjyw
  "Comparison of best results of clean VS other ORMs")
  
- We use this formula to calculate the difference : (B - A) ÷ A * 100
+ We use this formula to calculate the difference : (B - A) ÷ A * 100  
  As you see on the chart:
- [Lesan](https://github.com/MiaadTeam/lesan) reads the database 1168% faster than the `prisma-express-rest`.
- [Lesan](https://github.com/MiaadTeam/lesan) reads the database 1417% faster than the `prisma-express-graphql`.
- [Lesan](https://github.com/MiaadTeam/lesan) reads the database 4435% faster than the `mongoose-express-rest` (Note that we did not sort in this query)
- [Lesan](https://github.com/MiaadTeam/lesan) reads the database 72289% faster than the `mongo-express-rest` (Note that we did not sort in this query)
-[Lesan](https://github.com/MiaadTeam/lesan) reads the database 298971% faster than the `mongoose-express-rest` (used sortby)
+ - [Lesan](https://github.com/MiaadTeam/lesan) reads the database 1168% faster than the `prisma-express-rest`.
+ - [Lesan](https://github.com/MiaadTeam/lesan) reads the database 1417% faster than the `prisma-express-graphql`.
+ - [Lesan](https://github.com/MiaadTeam/lesan) reads the database 4435% faster than the `mongoose-express-rest` (Note that we did not sort in this query)
+ - [Lesan](https://github.com/MiaadTeam/lesan) reads the database 72289% faster than the `mongo-express-rest` (Note that we did not sort in this query)
+ - [Lesan](https://github.com/MiaadTeam/lesan) reads the database 298971% faster than the `mongoose-express-rest` (used sortby)
 
-*Maybe we created the most performant framework in the world!*
+**Maybe we created the most performant framework in the world!**
 
 Note: the services and database are the same for `prisma-express-rest` and `prisma-express-graphql`. The difference is because of the overhead of parsing for `gql`. Graphql used this method to provide to add a schema-defining API to other libraries, but [Lesan](https://github.com/MiaadTeam/lesan) provides a schema-defining API to other libraries plus type-safety with no overhead and also a more powerful playground!
 
