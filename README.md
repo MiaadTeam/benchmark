@@ -33,16 +33,16 @@ we ommited the first query for all ORM-API combinations to have more normalized 
 
 ### deno-lesan
 ![results](https://github.com/MiaadTeam/benchmark/assets/7347769/7e86ad4a-fe2f-422b-836e-64c423eae67a)
- - test 1: 0, 157
- - test 2: 0, 139
- - test 3: 0, 130 (best) 
- - test 4: 0, 153
- - test 5: 0, 136
- - test 6: 0, 133
- - test 7: 0, 131
- - test 8: 0, 132
- - test 9: 0, 135
- - test 10: 0, 132
+ - test 1: 157 ms
+ - test 2: 139 ms
+ - test 3: 130 ms (best) 
+ - test 4: 153 ms
+ - test 5: 136 ms
+ - test 6: 133 ms
+ - test 7: 131 ms
+ - test 8: 132 ms
+ - test 9: 135 ms
+ - test 10: 132 ms
 
 ### prisma-express-rest (PostgreSQL):
 
@@ -60,35 +60,73 @@ we ommited the first query for all ORM-API combinations to have more normalized 
 
 ### prisma-express-graphql (PostgreSQL):
 ![results](https://github.com/MiaadTeam/benchmark/assets/7347769/4dfcdf00-39b9-4e01-a23a-dd6d9e6480fb)
- - test 1: 2131 
- - test 2: 1988
- - test 3: 2054
- - test 4: 1973  ( best )
- - test 5: 1990
- - test 6: 2058
- - test 7: 2033
- - test 8: 1970
- - test 9: 2112
- - test 10: 1985
+ - test 1: 2131 ms 
+ - test 2: 1988 ms
+ - test 3: 2054 ms
+ - test 4: 1973 ms  ( best )
+ - test 5: 1990 ms
+ - test 6: 2058 ms
+ - test 7: 2033 ms
+ - test 8: 1970 ms
+ - test 9: 2112 ms
+ - test 10: 1985 ms
 
 ### mongoose-express-rest :
 Note that we did not sort in this query :
-![results](https://github.com/MiaadTeam/benchmark/assets/7347769/8a9e7431-4da4-4cd2-905c-9728ad835cb7)
+![mongoose-express-rest](test-results/mongoose-express-rest/noSort/results.png "mongoose-express-rest ( No sort )")
+ - test 1: 6659 ms
+ - test 2: 6134 ms
+ - test 3: 5896 ms ( best )
+ - test 4: 6105 ms
+ - test 5: 5899 ms
+ - test 6: 6028 ms
+ - test 7: 5992 ms
+ - test 8: 6033 ms
+ - test 9: 6628 ms
+ - test 10: 6033 ms
 
+### mongo-express-rest :
+![mongo-express-rest](test-results/mongo-express-rest/results.png "mongo-express-rest ( No sort )")
+ - test 1: 100935  ms
+ - test 2: 103958 ms
+ - test 3: 94106 ms ( best ) 
+ - test 4: 98903 ms
+ - test 5: 100040 ms
+ - test 6: 111294 ms
+ - test 7: 112074 ms
+ - test 8: 108156 ms
+ - test 9: 102024 ms
+ - test 10: 96959 ms
+ 
+### mongoose-express-rest :
+Note that we did not sort in this query :
+![mongoose-express-rest](test-results/mongoose-express-rest/noSort/results.png "mongoose-express-rest ( No sort )")
+ - test 1: 6659 ms
+ - test 2: 6134 ms
+ - test 3: 5896 ms ( best )
+ - test 4: 6105 ms
+ - test 5: 5899 ms
+ - test 6: 6028 ms
+ - test 7: 5992 ms
+ - test 8: 6033 ms
+ - test 9: 6628 ms
+ - test 10: 6033 ms
 
 ### mongoose-express-rest :
 we used sortby population as a numeric field:
-![results](https://github.com/MiaadTeam/benchmark/assets/7347769/9ec80403-3994-4ef8-b6cb-ba9e022f35f4)
- - test 1: 0, 391010
- - test 2: 0, 405115
- - test 3: 0, 393145
- - test 4: 0, 396225
- - test 5: 0, 389920
- - test 6: 0, 393057
- - test 7: 0, 432257
- - test 8: 0, 396880
- - test 9: 0, 461448
- - test 10: 0, 388793  ( best )
+![mongoose-express-rest](test-results/mongoose-express-rest/sorted/results.png "mongoose-express-rest ( used sortby )")
+ - test 1: 391010 ms
+ - test 2: 405115 ms
+ - test 3: 393145 ms
+ - test 4: 396225 ms
+ - test 5: 389920 ms
+ - test 6: 393057 ms
+ - test 7: 432257 ms
+ - test 8: 396880 ms
+ - test 9: 461448 ms
+ - test 10: 388793 ms  ( best )
+
+
 
 # Running
 ### Prerequisites
@@ -172,4 +210,4 @@ the seed argument tells the server to enter the data of the dataset(countries, p
 4.  As we are root of src/mongoose-express-rest, to fetch our query:
       `hurl --variables-file .env ./http/getFiftyCitiesOfCountryNoSrot.hurl --test`
 
-![mongoose-express-rest](test-results/mongoose-express-rest/noSort/results.png "mongoose-express-rest ( No sort )")
+
