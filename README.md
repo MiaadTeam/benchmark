@@ -172,4 +172,4 @@ the seed argument tells the server to enter the data of the dataset(countries, p
 4.  As we are root of src/mongoose-express-rest, to fetch our query:
       `hurl --variables-file .env ./http/getFiftyCitiesOfCountryNoSrot.hurl --test`
 
-![mongoose-express-rest](test-results/mongoose-express-rest/results.png "mongoose-express-rest ( No sort )")
+![mongoose-express-rest](test-results/mongoose-express-rest/noSort/results.png "mongoose-express-rest ( No sort )")
