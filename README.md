@@ -5,11 +5,11 @@ The current benchmark is going to illustrate how [Lesan](https://github.com/Miaa
 We will seed each database with the same dataset ( downloaded from kaggle.com ) and then query for 50 cities of 50 provinces in available countries.
 
 # Tools
-For our comparison we have used the hardware and software below:
-System: Asus GL552V, 16G of memory, core i7
-OS: Xubuntu 20.04
+For our comparison we have used the hardware and software below:  
+System: Asus GL552V, 16G of memory, core i7  
+OS: Xubuntu 20.04  
 WezTerm: a powerful cross-platform terminal emulator and multiplexer implemented in Rust.
-Hurl: a command line tool that runs HTTP requests defined in a simple plain text format. We used it to test HTTP responses. When Hurl is used via the `--test` option, it does not consume any time to process the response object. So that is why we chose Hurl over most known tools like Postman, to have more precise results.
+Hurl: a command line tool that runs HTTP requests defined in a simple plain text format. We used it to test HTTP response times. When Hurl is used via the `--test` option, it does not consume any time to process the response object. So that is why we chose Hurl over most known tools like Postman, to have more precise results.
 
 # Results
 ### Best
@@ -19,15 +19,76 @@ In each case, we tested every `orm-server-api` combination 10 times and marked t
  
  We use this formula to calculate the difference : (B - A) ÷ A * 100  
  As you see on the chart:
- - [Lesan](https://github.com/MiaadTeam/lesan) return data to client `1168%` faster than the `prisma-express-rest`. Which uses `postgres` as a database.
- - [Lesan](https://github.com/MiaadTeam/lesan) return data to client `1417%` faster than the `prisma-express-graphql`. Which uses `postgres` as a database.
- - [Lesan](https://github.com/MiaadTeam/lesan) return data to client `4435%` faster than the `mongoose-express-rest` (Note that we did not sort in this query)
- - [Lesan](https://github.com/MiaadTeam/lesan) return data to client `72289%` faster than the `mongo-express-rest` (Note that we did not sort in this query)
- - [Lesan](https://github.com/MiaadTeam/lesan) return data to client `298971%` faster than the `mongoose-express-rest` (used sortby)
+ - [Lesan](https://github.com/MiaadTeam/lesan) returns data to client `1168%` faster than the `prisma-express-rest`. Which uses `PostgreSQL` as a database.
+ - [Lesan](https://github.com/MiaadTeam/lesan) returns data to client `1417%` faster than the `prisma-express-graphql`. Which uses `PostgreSQL` as a database.
+ - [Lesan](https://github.com/MiaadTeam/lesan) returns data to client `4435%` faster than the `mongoose-express-rest` (Note that we did not sort in this query)
+ - [Lesan](https://github.com/MiaadTeam/lesan) returns data to client `72289%` faster than the `mongo-express-rest` (Note that we did not sort in this query)
+ - [Lesan](https://github.com/MiaadTeam/lesan) returns data to client `298971%` faster than the `mongoose-express-rest` (used sortby population as a numeric field)
 
 **Maybe we created the most performant framework in the world!**
 
-Note: the services and database are the same for `prisma-express-rest` and `prisma-express-graphql`. The difference is because of the overhead of parsing for `gql`. Graphql used this method to provide to add a schema-defining API to other libraries, but [Lesan](https://github.com/MiaadTeam/lesan) provides a schema-defining API to other libraries plus type-safety with no overhead and also a more powerful playground!
+Note: the services and database are the same for `prisma-express-rest` and `prisma-express-graphql`. The difference is because of the overhead of parsing for `gql`. Graphql used this method  to add a schema-defining API to other libraries, but [Lesan](https://github.com/MiaadTeam/lesan) provides a schema-defining API to other libraries plus type-safety with no overhead and also a more powerful playground!  
+
+we ommited the first query for all ORM-API combinations to have more normalized results and then illustrated 10 tests, and the system is the same as we mentioned above.  
+
+### deno-lesan
+![results](https://github.com/MiaadTeam/benchmark/assets/7347769/7e86ad4a-fe2f-422b-836e-64c423eae67a)
+ - test 1: 0, 157
+ - test 2: 0, 139
+ - test 3: 0, 130 (best) 
+ - test 4: 0, 153
+ - test 5: 0, 136
+ - test 6: 0, 133
+ - test 7: 0, 131
+ - test 8: 0, 132
+ - test 9: 0, 135
+ - test 10: 0, 132
+
+### prisma-express-rest (PostgreSQL):
+
+![results](https://github.com/MiaadTeam/benchmark/assets/7347769/4822b014-cd06-433e-88f4-4a483d219aa4)
+ - test 1: 1814 ms
+ - test 2: 1655 ms
+ - test 3: 1784 ms
+ - test 4: 1649 ms  ( best )
+ - test 5: 1768 ms
+ - test 6: 1810 ms
+ - test 7: 1864 ms
+ - test 8: 1667 ms
+ - test 9: 1742 ms
+ - test 10: 1854 ms
+
+### prisma-express-graphql (PostgreSQL):
+![results](https://github.com/MiaadTeam/benchmark/assets/7347769/4dfcdf00-39b9-4e01-a23a-dd6d9e6480fb)
+ - test 1: 2131 
+ - test 2: 1988
+ - test 3: 2054
+ - test 4: 1973  ( best )
+ - test 5: 1990
+ - test 6: 2058
+ - test 7: 2033
+ - test 8: 1970
+ - test 9: 2112
+ - test 10: 1985
+
+### mongoose-express-rest :
+Note that we did not sort in this query :
+![results](https://github.com/MiaadTeam/benchmark/assets/7347769/8a9e7431-4da4-4cd2-905c-9728ad835cb7)
+
+
+### mongoose-express-rest :
+we used sortby population as a numeric field:
+![results](https://github.com/MiaadTeam/benchmark/assets/7347769/9ec80403-3994-4ef8-b6cb-ba9e022f35f4)
+ - test 1: 0, 391010
+ - test 2: 0, 405115
+ - test 3: 0, 393145
+ - test 4: 0, 396225
+ - test 5: 0, 389920
+ - test 6: 0, 393057
+ - test 7: 0, 432257
+ - test 8: 0, 396880
+ - test 9: 0, 461448
+ - test 10: 0, 388793  ( best )
 
 # Running
 ### Prerequisites
@@ -43,9 +104,9 @@ basic setting:
 3. Create a `.env` file like the `example.env` file
 
 In `src` directory there are repo directories that are named in <orm-server-api> format, e.g:`prisma-express-rest`
-We explain how to start with each one:
+We explain how to start with each one:  
 
-*prisma-express-rest:*
+### prisma-express-rest:  
 1. We have provided a docker file for the database creation,
   so in the Benchmark root, we compose it:
    `cd ./src/prisma-express-rest`
@@ -59,14 +120,46 @@ We explain how to start with each one:
    `npx prisma generate`
 5. In general, to start a server we use this format: `yarn start < --seed >`
   the seed argument tells the server to enter the data of the dataset(countries, provinces, and cities) into our database.
-  so for the first time, to seed the express server and Prisma orm we enter :
+  so for the first time, to seed the express server and Prisma ORM we enter :
    `yarn start --seed`
 6. We can start the server with a seeded database:
    `yarn start`
 7. As we are root of src/prisma-express-rest, to fetch our query:
    `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`
-So we can see the similar results :
-![prisma-express-rest](.test-results/prisma-express-rest/results.png "prisma-express-rest ( PostgreSQL )")
+So we can see the  test results 
+
+If you are curious about the query, you can find it in this path:   `src/prisma-express-rest/services/country/getFiftyCitiesOfCountry.service.ts` 
+let's have a look to the prisma query parameters:  
+```
+select: {
+			name: true,
+			abb: true,
+			population:true,
+			provinces: {
+				take: limit*pageNumber,
+				orderBy: {
+					population: "desc"
+				},
+				select: {
+					name: true,
+					abb: true,
+					population:true,
+					cities: {
+						select: {
+							name: true,
+							abb: true,
+							population:true,
+						},
+						take: limit,
+						orderBy: {
+							population: "desc"
+						},
+					}
+				}
+			}
+		}
+```
+We search for nested relations : limited number (default is 50) cities of provinces of each country with selection of name, abb and population and also order by population field in descending form.  
 
 *mongoose-express-rest:*
 1. You should install MongoDB on your machine first. The installation instructions can be found at [Official MongoDB installation](https://www.mongodb.com/docs/manual/installation/) manual.
@@ -79,4 +172,4 @@ the seed argument tells the server to enter the data of the dataset(countries, p
 4.  As we are root of src/mongoose-express-rest, to fetch our query:
       `hurl --variables-file .env ./http/getFiftyCitiesOfCountryNoSrot.hurl --test`
 
-![mongoose-express-rest](.test-results/mongoose-express-rest/results.png "mongoose-express-rest ( No sort )")
+![mongoose-express-rest](test-results/mongoose-express-rest/results.png "mongoose-express-rest ( No sort )")
