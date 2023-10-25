@@ -166,7 +166,8 @@ We explain how to start with each one:
    `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`
 So we can see the  test results 
 
-If you are curious about the query, you can find it in this path:   `src/prisma-express-rest/services/country/getFiftyCitiesOfCountry.service.ts` 
+If you are curious about the query, you can find it in this path:  
+`src/prisma-express-rest/services/country/getFiftyCitiesOfCountry.service.ts` 
 let's have a look to the prisma query parameters:  
 ```
 select: {
@@ -199,6 +200,18 @@ select: {
 ```
 We search for nested relations : limited number (default is 50) cities of provinces of each country with selection of name, abb and population and also order by population field in descending form.  
 
+### prisma-express-graphql: 
+If you have done previous steps to seeding the database, you can now easily change your dircetory to the `src/prisma-express-graphql` 
+just go for starting the database and enter:  
+  `yarn start` 
+
+As we are in root of src/prisma-express-graphql, to fetch our query we enter:
+   `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`
+
+the query for the data is the same as `prisma-express-rest`, we just defined Graphql API schema definition in this path to use of the same service:
+`src/prisma-express-graphql/graphql/root.ts`
+
+### mongoose-express-rest (No sort): 
 *mongoose-express-rest:*
 1. You should install MongoDB on your machine first. The installation instructions can be found at [Official MongoDB installation](https://www.mongodb.com/docs/manual/installation/) manual.
 2. In general, to start a server we use this format: `yarn start < --seed >`
@@ -209,5 +222,106 @@ the seed argument tells the server to enter the data of the dataset(countries, p
    `yarn start`
 4.  As we are root of src/mongoose-express-rest, to fetch our query:
       `hurl --variables-file .env ./http/getFiftyCitiesOfCountryNoSrot.hurl --test`
+  
+
+The query can be found in this path:  
+`src/mongoose-express-rest/services/country/getFiftyCitiesNoSort.service.ts`  
+
+And has such a query:
+```
+await Country.find( input ).populate({
+  path: 'provinces',
+  options: {
+    limit: limit,
+  },
+  populate: {
+    path: 'cities',
+    model: City,
+    options: {
+      limit: limit,
+      // sort: { created: -1},  THIS COMMENTED PART SHOWS WHY WE CALL THIS QUERY "NO SORT"
+    }
+  }
+}).exec()
+```
+What we mean from NO SORT in mentioned charts? every country, province and city has a population field. for this query we did not used `sort` for the query
 
 
+### mongoose-express-rest ( sort ): 
+If you have done previous steps to seeding the MongoDB database and started the server 
+you need to just fetch our query:
+    `hurl --variables-file .env ./http/getFiftyCitiesOfCountrySorted.hurl --test`
+
+And the query path is:  
+  `src/mongoose-express-rest/services/country/getFiftyCitiesSorted.service.ts`  
+let's have a look: 
+```
+return await Country.find( input )
+    .populate({
+      path: 'provinces',
+      options: {
+        limit: limit,
+      },
+      populate: {
+        path: 'cities',
+        model: City,
+        options: {
+          limit: limit,
+          sort: { created: -1},  // SORT DESCENDING
+               skip: pageNumber*limit
+        }
+      }
+}).exec()
+```
+
+we can consider that we just added sort for the cities population, and ommited the sort of provinces, but the query response time for the best cases has been increased by 6494%! 
+
+### mongo-express-rest:
+If you have done previous steps to seeding the MongoDB database just change directory to `mongo-express-rest` 
+and started the server: `yarn start`  
+
+Then you need to just fetch the query:
+  `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`  
+
+And the query path is:  
+  `src/mongo-express-rest/services/country/getFiftyCitiesOfCountry.service.ts`  
+let's have a look: 
+```
+return collections.countries?.aggregate(
+    [
+      { $skip: 0 },
+      { $limit: 50 },
+      {
+        $lookup: {
+          from: "provinces",
+          let: { "provincesIds": "$provinces" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $in: ["$_id", "$$provincesIds"] }
+              }
+            },
+            {
+              $lookup: {
+                from: "cities",
+                let: { "cityIds": "$cities" },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: { $in: ["$_id", "$$cityIds"] }
+                    }
+                  }
+                ],
+                as: "cities"
+              },
+            }
+          ],
+          as: "provinces"
+        }
+      },
+    ]
+  ).toArray()
+
+```
+
+Note that in this mongo query we did not sorted again.
