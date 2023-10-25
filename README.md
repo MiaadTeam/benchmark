@@ -170,32 +170,32 @@ If you are curious about the query, you can find it in this path:   `src/prisma-
 let's have a look to the prisma query parameters:  
 ```
 select: {
-			name: true,
-			abb: true,
-			population:true,
-			provinces: {
-				take: limit*pageNumber,
-				orderBy: {
-					population: "desc"
-				},
-				select: {
-					name: true,
-					abb: true,
-					population:true,
-					cities: {
-						select: {
-							name: true,
-							abb: true,
-							population:true,
-						},
-						take: limit,
-						orderBy: {
-							population: "desc"
-						},
-					}
-				}
-			}
-		}
+  name: true,
+  abb: true,
+  population:true,
+  provinces: {
+    take: limit*pageNumber,
+    orderBy: {
+      population: "desc"
+    },
+    select: {
+      name: true,
+      abb: true,
+      population:true,
+      cities: {
+        select: {
+          name: true,
+          abb: true,
+          population:true,
+        },
+        take: limit,
+        orderBy: {
+          population: "desc"
+        },
+      }
+    }
+  }
+}
 ```
 We search for nested relations : limited number (default is 50) cities of provinces of each country with selection of name, abb and population and also order by population field in descending form.  
 
