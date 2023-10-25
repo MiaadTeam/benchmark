@@ -23,6 +23,6 @@
 		"typescript": "^5.1.6"
 	},
 	"scripts": {
-		"start": "ts-node-dev -r dotenv/config index.ts"
+		"start": "ts-node-dev -r dotenv/config server.ts"
 	}
 }
