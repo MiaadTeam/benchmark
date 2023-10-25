@@ -14,7 +14,7 @@ gantt
     section test 5
     1768   : 0, 1768
     section test 6
-    1768   : 0, 1768
+    1810   : 0, 1810
     section test 7
     1864   : 0, 1864
     section test 8
