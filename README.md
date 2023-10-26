@@ -9,7 +9,7 @@ We will seed each database with the same dataset ( downloaded from kaggle.com ) 
 For our comparison we have used the hardware and software below:  
 System: Asus GL552V, 16G of memory, core i7  
 OS: Xubuntu 20.04  
-WezTerm: a powerful cross-platform terminal emulator and multiplexer implemented in Rust.
+WezTerm: a powerful cross-platform terminal emulator and multiplexer implemented in Rust.  
 Hurl: a command line tool that runs HTTP requests defined in a simple plain text format. We used it to test HTTP response times. When Hurl is used via the `--test` option, it does not consume any time to process the response object. So that is why we chose Hurl over most known tools like Postman, to have more precise results.
 
 # Results
@@ -163,7 +163,7 @@ We explain how to start with each one:
    `yarn start --seed`
 6. We can start the server with a seeded database:
    `yarn start`
-7. As we are root of src/prisma-express-rest, to fetch our query:
+7. As we are root of src/prisma-express-rest, to fetch our query we enter:
    `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`
 So we can see the  test results 
 
@@ -202,28 +202,27 @@ select: {
 We search for nested relations : limited number (default is 50) cities of provinces of each country with selection of name, abb and population and also order by population field in descending form.  
 
 ### prisma-express-graphql: 
-If you have done previous steps to seeding the database, you can now easily change your dircetory to the `src/prisma-express-graphql` 
-just go for starting the database and enter:  
+If you have done previous steps for seeding the database, you can now easily change your dircetory to the `src/prisma-express-graphql` 
+just go for starting the database and enter:   
   `yarn start` 
 
-As we are in root of src/prisma-express-graphql, to fetch our query we enter:
+As we are in root of src/prisma-express-graphql, to fetch our query we enter:  
    `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`
 
-the query for the data is the same as `prisma-express-rest`, we just defined Graphql API schema definition in this path to use of the same service:
+the query for the data is the same as `prisma-express-rest`, we just defined Graphql API schema definition in this path to use of the same service:  
 `src/prisma-express-graphql/graphql/root.ts`
 
 ### mongoose-express-rest (No sort): 
 1. You should install MongoDB on your machine first. The installation instructions can be found at [Official MongoDB installation](https://www.mongodb.com/docs/manual/installation/) manual.
 2. In general, to start a server we use this format: `yarn start < --seed >`
-the seed argument tells the server to enter the data of the dataset(countries, provinces, and cities) into our database.
-  so for the first time, to seed the express server and Mongoose ORM we enter :
+the seed argument tells the server to enter the data of the dataset(countries, provinces, and cities) into our database.  
+  So for the first time, to seed the express server and Mongoose ORM we enter:  
    `yarn start --seed`
 3. We can start the server with a seeded database:
    `yarn start`
-4.  As we are root of src/mongoose-express-rest, to fetch our query:
-      `hurl --variables-file .env ./http/getFiftyCitiesOfCountryNoSrot.hurl --test`
+4. As we are in the root of src/mongoose-express-rest, to fetch our query we enter:
+   `hurl --variables-file .env ./http/getFiftyCitiesOfCountryNoSrot.hurl --test`
   
-
 The query can be found in this path:  
 `src/mongoose-express-rest/services/country/getFiftyCitiesNoSort.service.ts`  
 
@@ -249,7 +248,7 @@ What we mean from NO SORT in mentioned charts? Every country, province and city 
 
 ### mongoose-express-rest ( sort ): 
 If you have done previous steps to seeding the MongoDB database and started the server 
-you need to just fetch our query:
+you need to just fetch our query we enter:  
     `hurl --variables-file .env ./http/getFiftyCitiesOfCountrySorted.hurl --test`
 
 And the query path is:  
@@ -268,25 +267,25 @@ return await Country.find( input )
         options: {
           limit: limit,
           sort: { created: -1},  // SORT DESCENDING
-               skip: pageNumber*limit
+          skip: pageNumber*limit
         }
       }
 }).exec()
 ```
 
-we can consider that we just added sort for the cities population, and omitted the sort of provinces, but the query response time for the best cases has been increased by 6494%! 
+Please consider that we just added sort for the cities population, and omitted the sort of provinces, but the query response time for the best cases has been increased by 6494%! 
 
 ### mongo-express-rest:
 If you have done previous steps for seeding the MongoDB database just change directory to `mongo-express-rest` 
 and start the server: `yarn start`  
 
-Then you need to just fetch the query:
+Then you need to just fetch the query:  
   `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`  
 
 And the query path is:  
   `src/mongo-express-rest/services/country/getFiftyCitiesOfCountry.service.ts`  
 
-Let's have a look: 
+Let's have a look:   
 ```
 return collections.countries?.aggregate(
     [
