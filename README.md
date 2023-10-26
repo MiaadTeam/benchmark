@@ -1,7 +1,7 @@
 # Purpose
 [Lesan](https://github.com/MiaadTeam/lesan) is a framework that excels at the performance of reading data from embedded data with ease of writing and updating the embedded data.
-Embedding sorted data (using MongoDB) has significant improvement on performance of data read and the main art of lesan is to provide ease of update for these sorted embedded data. But is it worth solving challenges like updating huge embedded data? 
-The current benchmark is going to illustrate how [Lesan](https://github.com/MiaadTeam/lesan) differs with various combinations of ORM and APIs.
+Embedding sorted data (using MongoDB) has significant improvement on performance of data read and the main art of Lesan is to provide ease of update for these sorted embedded data. But does it worth solving challenges like updating huge embedded data? 
+The current benchmark is going to illustrate how [Lesan](https://github.com/MiaadTeam/lesan) differs with various combinations of ORMs and APIs.
 We will seed each database with the same dataset ( downloaded from kaggle.com ) and then query for 50 cities of 50 provinces in available countries.
 
 # Tools
@@ -31,7 +31,7 @@ Note: the services and database are the same for `prisma-express-rest` and `pris
 
 we ommited the first query for all ORM-API combinations to have more normalized results and then illustrated 10 tests, and the system is the same as we mentioned above.  
 
-### deno-lesan
+### deno-lesan:  
 ![results](https://github.com/MiaadTeam/benchmark/assets/7347769/7e86ad4a-fe2f-422b-836e-64c423eae67a)
  - test 1: 157 ms
  - test 2: 139 ms
@@ -46,11 +46,11 @@ we ommited the first query for all ORM-API combinations to have more normalized 
 
 ### prisma-express-rest (PostgreSQL):
 
-![results](https://github.com/MiaadTeam/benchmark/assets/7347769/4822b014-cd06-433e-88f4-4a483d219aa4)
+![results](test-results/prisma-express-rest/results.png)
  - test 1: 1814 ms
  - test 2: 1655 ms
  - test 3: 1784 ms
- - test 4: 1649 ms  ( best )
+ - test 4: 1649 ms (best)
  - test 5: 1768 ms
  - test 6: 1810 ms
  - test 7: 1864 ms
@@ -59,11 +59,11 @@ we ommited the first query for all ORM-API combinations to have more normalized 
  - test 10: 1854 ms
 
 ### prisma-express-graphql (PostgreSQL):
-![results](https://github.com/MiaadTeam/benchmark/assets/7347769/4dfcdf00-39b9-4e01-a23a-dd6d9e6480fb)
+![results](test-results/prisma-express-graphql/results.png)
  - test 1: 2131 ms 
  - test 2: 1988 ms
  - test 3: 2054 ms
- - test 4: 1973 ms  ( best )
+ - test 4: 1973 ms (best)
  - test 5: 1990 ms
  - test 6: 2058 ms
  - test 7: 2033 ms
@@ -76,7 +76,7 @@ Note that we did not sort in this query :
 ![mongoose-express-rest](test-results/mongoose-express-rest/noSort/results.png "mongoose-express-rest ( No sort )")
  - test 1: 6659 ms
  - test 2: 6134 ms
- - test 3: 5896 ms ( best )
+ - test 3: 5896 ms (best)
  - test 4: 6105 ms
  - test 5: 5899 ms
  - test 6: 6028 ms
@@ -89,7 +89,7 @@ Note that we did not sort in this query :
 ![mongo-express-rest](test-results/mongo-express-rest/results.png "mongo-express-rest ( No sort )")
  - test 1: 100935  ms
  - test 2: 103958 ms
- - test 3: 94106 ms ( best ) 
+ - test 3: 94106 ms (best) 
  - test 4: 98903 ms
  - test 5: 100040 ms
  - test 6: 111294 ms
@@ -103,7 +103,7 @@ Note that we did not sort in this query :
 ![mongoose-express-rest](test-results/mongoose-express-rest/noSort/results.png "mongoose-express-rest ( No sort )")
  - test 1: 6659 ms
  - test 2: 6134 ms
- - test 3: 5896 ms ( best )
+ - test 3: 5896 ms (best)
  - test 4: 6105 ms
  - test 5: 5899 ms
  - test 6: 6028 ms
@@ -124,7 +124,7 @@ we used sortby population as a numeric field:
  - test 7: 432257 ms
  - test 8: 396880 ms
  - test 9: 461448 ms
- - test 10: 388793 ms  ( best )
+ - test 10: 388793 ms (best)
 
 
 
@@ -168,7 +168,7 @@ So we can see the  test results
 
 If you are curious about the query, you can find it in this path:  
 `src/prisma-express-rest/services/country/getFiftyCitiesOfCountry.service.ts` 
-let's have a look to the prisma query parameters:  
+Let's have a look to the prisma query parameters:  
 ```
 select: {
   name: true,
@@ -212,7 +212,6 @@ the query for the data is the same as `prisma-express-rest`, we just defined Gra
 `src/prisma-express-graphql/graphql/root.ts`
 
 ### mongoose-express-rest (No sort): 
-*mongoose-express-rest:*
 1. You should install MongoDB on your machine first. The installation instructions can be found at [Official MongoDB installation](https://www.mongodb.com/docs/manual/installation/) manual.
 2. In general, to start a server we use this format: `yarn start < --seed >`
 the seed argument tells the server to enter the data of the dataset(countries, provinces, and cities) into our database.
@@ -239,12 +238,12 @@ await Country.find( input ).populate({
     model: City,
     options: {
       limit: limit,
-      // sort: { created: -1},  THIS COMMENTED PART SHOWS WHY WE CALL THIS QUERY "NO SORT"
+      // sort: { created: -1},  THIS COMMENTED LINE SHOWS WHY WE CALL THIS QUERY "NO SORT"
     }
   }
 }).exec()
 ```
-What we mean from NO SORT in mentioned charts? every country, province and city has a population field. for this query we did not used `sort` for the query
+What we mean from NO SORT in mentioned charts? Every country, province and city has a population field. For this query we did not used `sort` for the query.
 
 
 ### mongoose-express-rest ( sort ): 
@@ -254,7 +253,7 @@ you need to just fetch our query:
 
 And the query path is:  
   `src/mongoose-express-rest/services/country/getFiftyCitiesSorted.service.ts`  
-let's have a look: 
+Let's have a look: 
 ```
 return await Country.find( input )
     .populate({
@@ -274,18 +273,19 @@ return await Country.find( input )
 }).exec()
 ```
 
-we can consider that we just added sort for the cities population, and ommited the sort of provinces, but the query response time for the best cases has been increased by 6494%! 
+we can consider that we just added sort for the cities population, and omitted the sort of provinces, but the query response time for the best cases has been increased by 6494%! 
 
 ### mongo-express-rest:
-If you have done previous steps to seeding the MongoDB database just change directory to `mongo-express-rest` 
-and started the server: `yarn start`  
+If you have done previous steps for seeding the MongoDB database just change directory to `mongo-express-rest` 
+and start the server: `yarn start`  
 
 Then you need to just fetch the query:
   `hurl --variables-file .env ./http/getFiftyCitiesOfCountry.hurl --test`  
 
 And the query path is:  
   `src/mongo-express-rest/services/country/getFiftyCitiesOfCountry.service.ts`  
-let's have a look: 
+
+Let's have a look: 
 ```
 return collections.countries?.aggregate(
     [
