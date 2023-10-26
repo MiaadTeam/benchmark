@@ -1,6 +1,7 @@
 # Purpose
 [Lesan](https://github.com/MiaadTeam/lesan) is a framework that excels at the performance of reading data from embedded data with ease of writing and updating the embedded data.
-Embedding sorted data (using MongoDB) has significant improvement on performance of data read and the main art of Lesan is to provide ease of update for these sorted embedded data. But does it worth solving challenges like updating huge embedded data? 
+Embedding sorted data (using MongoDB) has significant improvement on performance of data read and the main art of Lesan is to provide ease of update for these sorted embedded data.  
+But does it worth solving challenges like updating huge embedded data?  
 The current benchmark is going to illustrate how [Lesan](https://github.com/MiaadTeam/lesan) differs with various combinations of ORMs and APIs.
 We will seed each database with the same dataset ( downloaded from kaggle.com ) and then query for 50 cities of 50 provinces in available countries.
 
