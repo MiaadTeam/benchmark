@@ -1,7 +1,7 @@
 {
 	"name": "Benchmark",
 	"version": "1.0.0",
-	"main": "index.js",
+	"main": "server.js",
 	"license": "MIT",
 	"dependencies": {
 		"@graphql-tools/schema": "^10.0.0",
@@ -34,7 +34,7 @@
 		"typescript": "^5.1.6"
 	},
 	"scripts": {
-		"start": "ts-node-dev -r dotenv/config index.ts",
+		"start": "ts-node-dev -r dotenv/config server.ts",
 		"start:prod": "node dist/main",
 		"build": "rimraf ./build && tsc",
 		"start:migrate": "prisma migrate deploy && yarn start:prod"

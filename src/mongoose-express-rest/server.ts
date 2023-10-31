@@ -1,5 +1,5 @@
 import express from "express";
-import { connectToMongoose } from ".";
+import { connectToMongoose } from "./index";
 import restRoutes from "./routes";
 import seedMongoose from "./seed";
 
