@@ -22,7 +22,7 @@ const seedMongoose = async() => {
 	
 const readDataSet = async () => {
 	const raw: any = await readFile(
-		path.join(__dirname, "../../dataset.json"),
+		path.join(__dirname, "../dataset/dataparsed.json"),
 		'utf-8'
 	)
 	return JSON.parse(raw)
