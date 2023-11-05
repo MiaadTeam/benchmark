@@ -20,7 +20,7 @@ try {
     app.use(express.json());
     
     app.listen(SERVER_PORT, () => {
-      console.log(`mongoose-express-rest server is up at http://localhost:${SERVER_PORT}`);
+      console.log(`mongoose-express server is up at http://localhost:${SERVER_PORT}`);
     });
   })();
 } catch (error) {

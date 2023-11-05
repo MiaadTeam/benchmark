@@ -1,6 +1,6 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import getFiftyCitiesOfCountryService from "../../prisma-express-rest/services/country/getFiftyCitiesOfCountry.service";
 import seedPrisma from "../prisma/seed";
+import getFiftyCitiesOfCountryService from "../services/country/getFiftyCitiesOfCountry.service";
     
 // graphql models and queries types
 export const typeDefs = `

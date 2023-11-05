@@ -3,7 +3,7 @@
         "module": "commonjs",
         "lib": ["dom", "es6", "es2019", "esnext.asynciterable"],
         "sourceMap": true,
-        "outDir": "../mongoose-express/dist",
+        "outDir": "./dist",
         "moduleResolution": "node",
         "declaration": false,
 
@@ -30,5 +30,5 @@
         "pretty": true,
         "downlevelIteration": true
     },
-    "exclude": ["../mongoose-express/node_modules"]
+    "exclude": ["node_modules"]
 }

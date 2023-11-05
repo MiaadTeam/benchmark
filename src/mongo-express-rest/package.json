@@ -1,5 +1,5 @@
 {
-	"name": "mongoose-express-rest",
+	"name": "mongoose-express",
 	"version": "1.0.0",
 	"main": "index.js",
 	"license": "MIT",
