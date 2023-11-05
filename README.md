@@ -33,7 +33,7 @@ Note: the services and database are the same for `prisma-express-rest` and `pris
 we ommited the first query for all ORM-API combinations to have more normalized results and then illustrated 10 tests, and the system is the same as we mentioned above.  
 
 ### deno-lesan:  
-![results](https://github.com/MiaadTeam/benchmark/assets/7347769/7e86ad4a-fe2f-422b-836e-64c423eae67a)
+![results](test-results/best-results.png)
  - test 1: 157 ms
  - test 2: 139 ms
  - test 3: 130 ms (best) 
@@ -47,7 +47,7 @@ we ommited the first query for all ORM-API combinations to have more normalized 
 
 ### prisma-express-rest (PostgreSQL):
 
-![results](test-results/prisma-express-rest/results.png)
+![results](test-results/prisma-express-postgres/results.png)
  - test 1: 1814 ms
  - test 2: 1655 ms
  - test 3: 1784 ms
@@ -60,7 +60,7 @@ we ommited the first query for all ORM-API combinations to have more normalized 
  - test 10: 1854 ms
 
 ### prisma-express-graphql (PostgreSQL):
-![results](test-results/prisma-express-graphql/results.png)
+![results](test-results/prisma-graphql-postgres/results.png)
  - test 1: 2131 ms 
  - test 2: 1988 ms
  - test 3: 2054 ms
@@ -74,7 +74,7 @@ we ommited the first query for all ORM-API combinations to have more normalized 
 
 ### mongoose-express-rest :
 Note that we did not sort in this query :
-![mongoose-express-rest](test-results/mongoose-express-rest/noSort/results.png "mongoose-express-rest ( No sort )")
+![mongoose-express-rest](test-results/mongoose-express/noSort/results.png "mongoose-express-rest ( No sort )")
  - test 1: 6659 ms
  - test 2: 6134 ms
  - test 3: 5896 ms (best)
@@ -87,7 +87,7 @@ Note that we did not sort in this query :
  - test 10: 6033 ms
 
 ### mongo-express-rest :
-![mongo-express-rest](test-results/mongo-express-rest/results.png "mongo-express-rest ( No sort )")
+![mongo-express-rest](test-results/mongo-express/results.png "mongo-express-rest ( No sort )")
  - test 1: 100935  ms
  - test 2: 103958 ms
  - test 3: 94106 ms (best) 
@@ -101,7 +101,7 @@ Note that we did not sort in this query :
  
 ### mongoose-express-rest :
 Note that we did not sort in this query :
-![mongoose-express-rest](test-results/mongoose-express-rest/noSort/results.png "mongoose-express-rest ( No sort )")
+![mongoose-express-rest](test-results/mongoose-express/noSort/results.png "mongoose-express-rest ( No sort )")
  - test 1: 6659 ms
  - test 2: 6134 ms
  - test 3: 5896 ms (best)
@@ -115,7 +115,7 @@ Note that we did not sort in this query :
 
 ### mongoose-express-rest :
 we used sortby population as a numeric field:
-![mongoose-express-rest](test-results/mongoose-express-rest/sorted/results.png "mongoose-express-rest ( used sortby )")
+![mongoose-express-rest](test-results/mongoose-express/sorted/results.png "mongoose-express-rest ( used sortby )")
  - test 1: 391010 ms
  - test 2: 405115 ms
  - test 3: 393145 ms
