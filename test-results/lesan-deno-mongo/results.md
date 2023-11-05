@@ -1,6 +1,6 @@
 %% to see results online: https://mermaid.live/
 gantt
-   	title results of lesan-deno-rest, system: Asus GL552V, 16G of memory, corei7, OS: Xubuntu 20.04 (in milliseconds)
+   	title results of lesan-deno-mongo, system: Asus GL552V, 16G of memory, corei7, OS: Xubuntu 20.04 (in milliseconds)
     dateFormat X
     axisFormat %s
     section test 1
