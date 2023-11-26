@@ -16,7 +16,7 @@ Hurl: a command line tool that runs HTTP requests defined in a simple plain text
 ### Best
 In each case, we tested every `orm-server-api` combination 10 times and marked the best result on their chart. We have compared the best results of each one to know how they differ with [Lesan](https://github.com/MiaadTeam/lesan) and then illustrated the records of each combination:  
 
-![best-results](https://github.com/MiaadTeam/benchmark/assets/6236123/4146e561-55a3-4fd0-a6bb-61a37bb37532)
+![best-results](test-results/best-results.png)
  
  We use this formula to calculate the difference : (B - A) ÷ A * 100  
  As you see on the chart:
@@ -33,7 +33,7 @@ Note: the services and database are the same for `prisma-express-postgres` and `
 we omitted the first query for all ORM-API combinations to have more normalized results and then illustrated 10 tests, and the system is the same as we mentioned above. 
 
 ### lesan-deno-mongo:  
-![results](test-results/best-results.png)
+![results](test-results/lesan-deno-mongo/results.png)
  - test 1: 157 ms
  - test 2: 139 ms
  - test 3: 130 ms (best) 
