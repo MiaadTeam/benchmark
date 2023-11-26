@@ -4,14 +4,14 @@ import getOneProvinceService from '../../services/province/getOneProvince.servic
 const getOneProvince = async (req: Request, res: Response) => {
 	try {
 		const id = Number(req.params.id)
-		const Province = await getOneProvinceService(id)
+		const province = await getOneProvinceService(id)
 		
-		if (Province) {
-            res.status(200).send(Province);
+		if (province) {
+            res.status(200).send(province);
         }
 
 	}catch(error){
-		console.log( "failed to create Province : "+ error )
+		console.log( "failed to get Province : "+ error )
 	}
 }
 

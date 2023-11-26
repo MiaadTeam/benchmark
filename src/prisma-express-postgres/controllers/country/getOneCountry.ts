@@ -11,7 +11,7 @@ const getOneCountry = async (req: Request, res: Response) => {
         }
 
 	}catch(error){
-		console.log( "failed to create country : "+ error )
+		console.log( "failed to get country : "+ error )
 	}
 }
 

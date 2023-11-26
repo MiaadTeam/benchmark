@@ -11,7 +11,7 @@ const getOneCity = async (req: Request, res: Response) => {
         }
 
 	}catch(error){
-		console.log( "failed to create City : "+ error )
+		console.log( "failed to get city: "+ error )
 	}
 }
 

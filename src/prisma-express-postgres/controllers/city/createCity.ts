@@ -3,7 +3,9 @@ import createCityService from '../../services/city/createCity.service';
 
 const createCity = async (req: Request, res: Response) => {
 	try{
-		const result = await createCityService( req.body)
+		const {name, abb} = req.body
+		console.log('============= name, abb ============ : ', name, abb);	
+		const result = await createCityService({name, abb})
 
 		result
             ? res.status(201).send(`Successfully created a new City with id ${result.id}`)
