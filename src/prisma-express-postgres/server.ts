@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from "express";
 import { createPrismaConnection } from "./prisma/connection";
 import seedPrisma from './prisma/seed';
@@ -18,7 +19,7 @@ try {
 
 	restRoutes(app);
     app.use(express.json());
-    
+    app.use(cors) 
     app.listen(SERVER_PORT, () => {
       console.log(`Express server ( prisma + rest ) is up at http://localhost:${SERVER_PORT}`);
     });
