@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"dependencies": {
 		"@graphql-tools/schema": "^10.0.0",
-		"@prisma/client": "^5.1.1",
+		"@prisma/client": "5.1.1",
 		"@types/lodash": "^4.14.196",
 		"express": "^4.18.2",
 		"express-graphql": "^0.12.0",
@@ -16,7 +16,7 @@
 		"node": "^20.7.0",
 		"path": "^0.12.7",
 		"pg": "^8.11.2",
-		"prisma": "^5.1.1",
+		"prisma": "5.1.1",
 		"reflect-metadata": "^0.1.13",
 		"type-graphql": "^1.1.1"
 	},
