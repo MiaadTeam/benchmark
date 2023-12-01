@@ -1,0 +1,28 @@
+{
+  "name": "benchmark",
+  "version": "1.0.0",
+  "description": "[Lesan](https://github.com/MiaadTeam/lesan) is a framework that excels at the performance of reading data from embedded data with ease of writing and updating the embedded data. Embedding sorted data (using MongoDB) has significant improvement on performance of data read and the main art of Lesan is to provide ease of update for these sorted embedded data.   But does it worth solving challenges like updating huge embedded data?   The current benchmark is going to illustrate how [Lesan](https://github.com/MiaadTeam/lesan) differs with various combinations of ORMs and APIs. We will seed each database with the same dataset ( downloaded from kaggle.com ) and then query for 50 cities of 50 provinces in available countries.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MiaadTeam/benchmark.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MiaadTeam/benchmark/issues"
+  },
+  "homepage": "https://github.com/MiaadTeam/benchmark#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^10.0.2",
+    "express": "^4.18.2",
+    "express-graphql": "^0.12.0"
+  }
+}

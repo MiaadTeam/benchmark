@@ -1,5 +1,5 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import seedPrisma from "../prisma/seed";
+import seedPrisma from "../database/seed";
 import getFiftyCitiesOfCountryService from "../services/country/getFiftyCitiesOfCountry.service";
     
 // graphql models and queries types

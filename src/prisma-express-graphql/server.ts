@@ -1,8 +1,8 @@
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
+import { createPrismaConnection } from "./database/connection";
+import seedPrisma from './database/seed';
 import { schema } from './graphql/root';
-import { createPrismaConnection } from "./prisma/connection";
-import seedPrisma from './prisma/seed';
 
 try {
   const app = express();
