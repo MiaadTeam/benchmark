@@ -1,7 +1,7 @@
 import cors from 'cors';
 import express from "express";
-import { createPrismaConnection } from "./prisma/connection";
-import seedPrisma from './prisma/seed';
+import { createPrismaConnection } from "./database/connection";
+import seedPrisma from './database/seed';
 import restRoutes from "./routes";
 
 try {

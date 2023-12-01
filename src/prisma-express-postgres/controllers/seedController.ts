@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import seedPrisma from '../prisma/seed';
+import seedPrisma from '../database/seed';
 
 const seedController = async (_req: Request, res: Response) => {
 	try {
+		console.log("started to seed ...");
 		await seedPrisma()
 		res.status(200).send("seeded successfully!");
 

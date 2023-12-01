@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { IProvinceDTO } from '../../dto/location.dto';
+import { IProvinceDTO } from '../../database/location.dto';
 import createProvinceService from '../../services/province/createProvince.service';
 
 const createProvince = async (req: Request, res: Response) => {

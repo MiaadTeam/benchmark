@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response } from 'express';
 import getManyProvincesService from '../../services/province/getManyProvinces.service';
 
 const getManyProvinces = async (req: Request, res: Response) => {
