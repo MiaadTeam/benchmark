@@ -7,7 +7,7 @@ import {
   object,
   optional,
   string,
-} from "/Users/syd/work/arc/lesan/mod.ts";
+} from "https://deno.land/x/lesan@v0.0.95/mod.ts";
 
 const coreApp = lesan();
 
@@ -98,7 +98,7 @@ const seedValidator = () => {
 const seed: ActFn = async (body) => {
   const { city, province } = body.details.set;
   const data = JSON.parse(
-    await Deno.readTextFile("../src/dataset/dataparsed.json"),
+    await Deno.readTextFile("../dataset/dataparsed.json"),
   ) as any[];
 
   const insertedCountry = await countries.insertMany({
