@@ -1,6 +1,7 @@
 import { makeExecutableSchema } from "@graphql-tools/schema";
-import getFiftyCitiesOfCountryService from "../../prisma-express-rest/services/country/getFiftyCitiesOfCountry.service";
-import seedPrisma from "../prisma/seed";
+import seedPrisma from "../database/seed";
+import getFiftyCitiesOfCountryService from "../services/country/getFiftyCitiesOfCountry.service";
+import getOneCountryService from "../services/country/getOneCountry.service";
     
 // graphql models and queries types
 export const typeDefs = `
@@ -41,6 +42,12 @@ export const typeDefs = `
             pageNumber:Int
         ):[Country]
     }
+
+    type Query{
+        getCountry(
+            id:Int
+        ):[Country]
+    }
 `
 
 // The root provides a resolver function for each API endpoint
@@ -55,6 +62,12 @@ export const resolvers = {
             args: {limit:number,pageNumber:number},
         ) => {
             return await getFiftyCitiesOfCountryService(args.limit,args.pageNumber)
+        },
+        getCountry: async (
+            _: unknown,
+            args: {id:number},
+        ) => {
+            return await getOneCountryService(args.id)
         },
     }
 }
